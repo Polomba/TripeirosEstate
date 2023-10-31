@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "211676600789",
+    "project_id": "homebalance-42da3",
+    "storage_bucket": "homebalance-42da3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211676600789:android:995a6d7c6ecb3dda91855c",
+        "android_client_info": {
+          "package_name": "com.example.homebalance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkowD97TzEL5W6MMtaq7hx3eo08mo8Ico"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

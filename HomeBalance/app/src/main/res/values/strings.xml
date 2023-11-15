@@ -2,4 +2,5 @@
     <string name="app_name">HomeBalance</string>
     <string name="login">Login</string>
     <string name="create_account">Create an account</string>
+    <string name="by">By</string>
 </resources>

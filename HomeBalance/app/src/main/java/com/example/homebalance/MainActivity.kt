@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.text.Editable
 import android.text.TextWatcher
@@ -83,5 +84,9 @@ class MainActivity : AppCompatActivity() {
             }
     }*/
 
+    fun doLogin(v: View){
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
 }
 

@@ -3,57 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/logo_vertical"
-    tools:context=".MainActivity">
+    android:background="@color/Beige"
+    android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:padding="24dp"
-            tools:ignore="MissingConstraints">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                android:id="@+id/loginText"
-                android:textSize="36sp"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/username"
-                android:layout_marginTop="40dp"
-                android:padding="8dp"
-                android:hint="Username"
-                android:textColor="@color/black"
-                android:drawablePadding="8dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/password"
-                android:layout_marginTop="20dp"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                android:hint="Password"
-                android:textColor="@color/black"
-                android:drawablePadding="8dp"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Login"
-                android:id="@+id/loginButton"
-                android:textSize="18sp"
-                android:layout_marginTop="30dp"
-                app:cornerRadius = "20dp"/>
-        </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="120dp"
+        android:src="@drawable/logo_vertical"
+        />
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/logo_blue"
+        tools:ignore="MissingConstraints"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        tools:ignore="MissingConstraints"
+        android:padding="13dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:backgroundTint="@color/logo_blue"
+        />
 
-
-
-
+    <Button
+        android:id="@+id/createAccountButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_account"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        tools:ignore="MissingConstraints"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:backgroundTint="@color/Beige"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

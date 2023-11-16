@@ -4,8 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
     android:background="@color/Beige"
-    >
+    tools:context=".LoginActivity">
+
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:text="@string/login"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:paddingTop="50dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/mylogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_login"
+        tools:ignore="MissingConstraints"
+        android:text="@string/mylogin"
+        android:textColor="@color/logo_blue"
+        android:gravity="center"/>
+
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/mylogin"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:backgroundTint="@color/logo_blue"
+        android:hint="@string/email"
+        android:textColorHint="@color/logo_blue"
+        />
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/et_email"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:backgroundTint="@color/logo_blue"
+        android:hint="@string/password"
+        android:textColorHint="@color/logo_blue"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_password"
+        tools:ignore="MissingConstraints"
+        android:text="@string/login"
+        android:padding="13dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/logo_blue"
+        />
+
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

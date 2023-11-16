@@ -3,4 +3,7 @@
     <string name="login">Login</string>
     <string name="create_account">Create an account</string>
     <string name="by">By</string>
+    <string name="mylogin">Make your login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

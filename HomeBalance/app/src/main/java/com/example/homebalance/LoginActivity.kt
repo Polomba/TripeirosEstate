@@ -11,5 +11,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
     }
 
+    fun goBack(v:View) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
 
 }

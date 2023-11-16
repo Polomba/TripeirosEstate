@@ -6,4 +6,5 @@
     <string name="mylogin">Make your login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="fgpass">Forgot Password?</string>
 </resources>

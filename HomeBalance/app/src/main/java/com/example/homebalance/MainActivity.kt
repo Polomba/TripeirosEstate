@@ -8,13 +8,17 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // Initialize Firebase Auth
         //auth = Firebase.auth
+        getPushToken()
         }
 /*        fun doRegister(v: View){
 
@@ -83,6 +88,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }*/
+
+    fun getPushToken() {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("Main", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+                val token = task.result
+                val msg = "InstanceID Token: "+token
+                Log.d("Main", msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            })
+    }
 
     fun doLogin(v: View){
         val intent = Intent(this, LoginActivity::class.java)

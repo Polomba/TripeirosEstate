@@ -56,6 +56,7 @@
         android:backgroundTint="@color/logo_blue"
         android:hint="@string/password"
         android:textColorHint="@color/logo_blue"
+        android:inputType="textPassword"
         />
     <Button
         android:id="@+id/btn_login"

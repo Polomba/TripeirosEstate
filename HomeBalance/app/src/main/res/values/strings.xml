@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">HomeBalance</string>
     <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="create_account">Create an account</string>
     <string name="by">By</string>
     <string name="mylogin">Make your login</string>
+    <string name="myregister">Make your register</string>
     <string name="email">Email</string>
+    <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="fgpass">Forgot Password?</string>
 </resources>

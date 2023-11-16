@@ -88,5 +88,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
+    fun doRegister(v: View){
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+    }
 }
 

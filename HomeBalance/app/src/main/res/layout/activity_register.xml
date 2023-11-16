@@ -5,34 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Beige"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
 
     <TextView
         android:id="@+id/tv_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:text="@string/login"
         android:gravity="center"
-        android:textSize="30sp"
         android:paddingTop="100dp"
+        android:text="@string/register"
         android:textColor="@color/black"
-        />
+        android:textSize="30sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
 
     <TextView
         android:id="@+id/mylogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/myregister"
+        android:textColor="@color/logo_blue"
         app:layout_constraintTop_toBottomOf="@id/tv_login"
         tools:ignore="MissingConstraints"
-        android:text="@string/mylogin"
-        android:textColor="@color/logo_blue"
-        android:gravity="center"/>
-
+        tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/et_email"
+        android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints"
@@ -41,9 +43,23 @@
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"
         android:backgroundTint="@color/logo_blue"
+        android:hint="@string/name"
+        android:textColorHint="@color/logo_blue"
+        />
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/et_name"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:backgroundTint="@color/logo_blue"
         android:hint="@string/email"
         android:textColorHint="@color/logo_blue"
         />
+
     <EditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
@@ -58,12 +74,12 @@
         android:textColorHint="@color/logo_blue"
         />
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/et_password"
         tools:ignore="MissingConstraints"
-        android:text="@string/login"
+        android:text="@string/register"
         android:padding="13dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -72,16 +88,6 @@
         android:textSize="17sp"
         />
 
-    <TextView
-        android:id="@+id/fgtPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
-        android:gravity="center"
-        android:text="@string/fgpass"
-        android:textSize="13sp"
-        />
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,7 +101,7 @@
         android:id="@+id/tv_by"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fgtPass"
+        app:layout_constraintTop_toBottomOf="@id/btn_register"
         android:layout_marginTop="70dp"
         android:text="@string/by"
         android:textAlignment="center"
@@ -113,11 +119,6 @@
         android:layout_marginRight="110dp"
         android:layout_marginBottom="30dp"
         />
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

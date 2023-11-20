@@ -71,6 +71,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/logo_blue"
         android:textSize="17sp"
+        android:onClick="doLoginLP"
         />
 
     <TextView

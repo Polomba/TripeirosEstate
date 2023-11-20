@@ -16,5 +16,10 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun doLoginLP(V:View){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+
 
 }

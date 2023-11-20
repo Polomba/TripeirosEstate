@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeBalance"
         tools:targetApi="31">
+        <activity
+            android:name=".AddHomeActivity"
+            android:exported="false" />
 
         <service
             android:name=".MyFirebaseMessagingService"

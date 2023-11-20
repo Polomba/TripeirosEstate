@@ -4,38 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity"
+    tools:context=".AddHomeActivity"
     android:background="@color/Beige">
-
-    <LinearLayout
-        android:id="@+id/bottomLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:background="@color/dark_beige"
-        tools:ignore="MissingConstraints">
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="150dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="130dp"
-            />
-
-        <ImageView
-            android:id="@+id/placeholder_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/icons8_add_96px"
-            />
-
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,6 +57,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    >
 
 </androidx.constraintlayout.widget.ConstraintLayout>

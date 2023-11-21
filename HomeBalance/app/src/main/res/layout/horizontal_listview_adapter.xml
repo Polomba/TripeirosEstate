@@ -1,113 +1,26 @@
-<LinearLayout android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="100dp"
-    android:orientation="horizontal"
-    android:background="@android:color/transparent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="6dp">
 
-    <!-- Item 1 -->
-    <LinearLayout
-        android:layout_marginRight="20dp"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:background="?android:attr/selectableItemBackground">
 
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/imageView1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icons8_person_96px" />
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/icons8_person_96px"
+        android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item 1" />
-    </LinearLayout>
+    <TextView
 
-    <!-- Item 2 -->
-    <LinearLayout
-        android:layout_marginRight="20dp"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:background="?android:attr/selectableItemBackground">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textColor="@android:color/black"/>
 
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/imageView2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icons8_person_96px" />
+</androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item 2" />
-    </LinearLayout>
-
-    <!-- Item 3 -->
-    <LinearLayout
-        android:layout_marginRight="20dp"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:background="?android:attr/selectableItemBackground">
-
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/imageView3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icons8_person_96px" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item 3" />
-    </LinearLayout>
-
-    <!-- Item 4 -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:background="?android:attr/selectableItemBackground">
-
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/imageView4"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icons8_person_96px" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item 4" />
-    </LinearLayout>
-</LinearLayout>

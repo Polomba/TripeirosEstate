@@ -2,28 +2,25 @@ package com.example.homebalance
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.HorizontalScrollView
+import android.widget.LinearLayout
 import android.widget.ListView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class InsideHomeActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: CustomAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inside_home)
 
-        val listView = findViewById<ListView>(R.id.listView)
+        recyclerView = findViewById(R.id.horizontalscroll)
+        adapter = CustomAdapter()
 
-        val itemList = ArrayList<Any>() // Storing a list of Any type here
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = adapter
 
-        // Hardcoded data for testing the ListView
-        itemList.add(R.drawable.icons8_back_50px_1)
-        itemList.add("Text 1")
-        itemList.add(R.drawable.icons8_back_50px_1)
-        itemList.add("Text 2")
-        // Add more items as needed...
-
-        val adapter = CustomAdapter(this)
-        listView.adapter = adapter
-
-        // Add the hardcoded item list to the adapter
-        adapter.addAll(itemList)
     }
 }

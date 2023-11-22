@@ -2,11 +2,9 @@ package com.example.homebalance
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.HorizontalScrollView
-import android.widget.LinearLayout
-import android.widget.ListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.homebalance.Adapters.CustomAdapter
 
 class InsideHomeActivity : AppCompatActivity() {
 

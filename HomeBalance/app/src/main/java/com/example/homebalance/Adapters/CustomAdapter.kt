@@ -1,15 +1,10 @@
-package com.example.homebalance
+package com.example.homebalance.Adapters
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.HorizontalScrollView
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.homebalance.R
 
 class CustomAdapter : RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

@@ -26,5 +26,6 @@ app.use('/api', require('./routes/generoRoutes').routes);
 app.use('/api', require('./routes/alteracaoConteudoRoutes').routes);
 app.use('/api', require('./routes/estatisticasRoutes').routes);
 */
+app.use('/api', require('./routes/authRoutes').routes);
 
 module.exports = app;

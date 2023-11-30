@@ -7,7 +7,7 @@ const router = express.Router();
 
 const { authUtilizador, registerUtilizador} = authController;
 
-router.post('/authLogin', alteracoesCountVerifyOnLogin, authUtilizador);
+router.post('/authLogin/', authUtilizador);
 router.post('/authRegister', registerUtilizador);
 
 module.exports = {

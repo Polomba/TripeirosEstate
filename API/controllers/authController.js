@@ -1,13 +1,13 @@
 'use strict'
 
 const jwt = require('jsonwebtoken');
-const utilizadoresData = require('../data/utilizadorService');
+const utilizadoresData = require('../data/userService');
 const utils = require('../utils/utils');
 
 const authUtilizador = async (req, res, next)=> {
     try {
         const { Email, Password } = req.body;
-        const user = await utilizadoresData.listUtilizadorByEmail(Email);
+        const user = await utilizadoresData.listUtilizadorById(Email);
 
         if (!user || !user.length || user[0].Password != Password) {
             return res.status(403).json({
@@ -16,7 +16,7 @@ const authUtilizador = async (req, res, next)=> {
         }
 
         delete user[0].Password;
-        const token = jwt.sign({user}, process.env.SECRET_TOKEN, { expiresIn: "1h"});
+        const token = jwt.sign({user}, process.env.SECRET_TOKEN, { expiresIn: "24h"});
 
         res.cookie("token", token,{
             httpOnly: false,
@@ -33,7 +33,6 @@ const registerUtilizador = async (req, res)=> {
     try {
         const Email = req.body.Email;
         const Password = req.body.Password;
-        const confirm_password = req.body.confirm_password;
         const userCheck = await utilizadoresData.listUtilizadorByEmail(Email);
 
         if (Object.keys(userCheck).length > 0) {
@@ -46,13 +45,6 @@ const registerUtilizador = async (req, res)=> {
             if (userCheck[0].Password) {
                 delete userCheck[0].Password;
             }
-        }
-
-
-        if (Password !== confirm_password) {
-            return res.status(409).json({
-                error: "Password não é igual ao campo Confirm Password!"
-            });
         }
 
         const newUserdata = req.body;

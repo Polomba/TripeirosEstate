@@ -7,7 +7,7 @@ const utils = require('../utils/utils');
 const authUtilizador = async (req, res, next)=> {
     try {
         const { Email, Password } = req.body;
-        const user = await utilizadoresData.listUtilizadorById(Email);
+        const user = await utilizadoresData.listUtilizadorByEmail(Email);
 
         if (!user || !user.length || user[0].Password != Password) {
             return res.status(403).json({
@@ -32,7 +32,7 @@ const authUtilizador = async (req, res, next)=> {
 const registerUtilizador = async (req, res)=> {
     try {
         const Email = req.body.Email;
-        const Password = req.body.Password;
+        const userData = req.body;
         const userCheck = await utilizadoresData.listUtilizadorByEmail(Email);
 
         if (Object.keys(userCheck).length > 0) {
@@ -48,7 +48,7 @@ const registerUtilizador = async (req, res)=> {
         }
 
         const newUserdata = req.body;
-        await utilizadoresData.createNewRegisterUtilizador(newUserdata);
+        await utilizadoresData.createNewRegisterUtilizador(userData);
         const user = await utilizadoresData.listUtilizadorByEmail(Email);
         const token = jwt.sign({user}, process.env.SECRET_TOKEN, { expiresIn: "1h"});
 

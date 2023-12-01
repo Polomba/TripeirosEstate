@@ -36,6 +36,24 @@ const listUtilizadorByEmail = async (Email)=> {
     }
 }
 
+const listUtilizadorByEmailPassword = async (Email)=> {
+    try {
+        let pool = await  sql.connect(config.sql);
+        let query = 'SELECT [Id],[Name],[Email],[Password], [ProfilePicture],[Roles],[Token]' +
+            'FROM [dbo].[User]' +
+            'WHERE [Email] = @Email';
+
+        const oneUtilizador = await pool.request()
+            .input('Email', sql.VarChar(255), Email)
+            .query(query);
+
+        return oneUtilizador.recordset;
+    }
+    catch (error) {
+        return  error.message;
+    }
+}
+
 const listUtilizadorById = async (Id) => {
     try {
         let pool = await  sql.connect(config.sql);
@@ -105,5 +123,6 @@ module.exports = {
     listUtilizadorByEmail,
     createUtilizador,
     createNewRegisterUtilizador,
-    listUtilizadorById
+    listUtilizadorById,
+    listUtilizadorByEmailPassword
 }

@@ -7,7 +7,7 @@ const utils = require('../utils/utils');
 const authUtilizador = async (req, res, next)=> {
     try {
         const { Email, Password } = req.body;
-        const user = await utilizadoresData.listUtilizadorByEmail(Email);
+        const user = await utilizadoresData.listUtilizadorByEmailPassword(Email);
 
         if (!user || !user.length || user[0].Password != Password) {
             return res.status(403).json({

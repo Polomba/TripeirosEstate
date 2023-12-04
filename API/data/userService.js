@@ -39,7 +39,7 @@ const listUtilizadorByEmail = async (Email)=> {
 const listUtilizadorByEmailPassword = async (Email)=> {
     try {
         let pool = await  sql.connect(config.sql);
-        let query = 'SELECT [Id],[Name],[Email],[Password], [ProfilePicture],[Roles],[Token]' +
+        let query = 'SELECT [Id],[Name],[Email],[Password],[ProfilePicture],[Roles],[Token]' +
             'FROM [dbo].[User]' +
             'WHERE [Email] = @Email';
 
@@ -52,6 +52,48 @@ const listUtilizadorByEmailPassword = async (Email)=> {
     catch (error) {
         return  error.message;
     }
+}
+const updateRolesUtilizador = async (Id, Utilizador_Roles) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        let query = 'UPDATE [dbo].[User] SET Utilizador_Roles = @Utilizador_Roles ' +
+            'WHERE [Id]=@Id';
+
+        const update = await pool.request()
+            .input('Id', sql.Int, Id)
+            .input('Utilizador_Roles', sql.VarChar(255), Utilizador_Roles)
+            .query(query);
+
+        return update.recordset;
+    }
+    catch (error) {
+        return error.message;
+    }
+}
+const updateEstadoUtilizador = async (Id, Roles) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        let query = 'UPDATE [dbo].[User] SET Roles = @Roles ' +
+            'WHERE [Id]=@Id';
+
+        const update = await pool.request()
+            .input('Id', sql.Int, Id)
+            .input('Roles', sql.VarChar(255), Roles)
+            .query(query);
+
+        return update.recordset;
+    }
+    catch (error) {
+        return error.message;
+    }
+}
+
+
+module.exports={
+    listUtilizadores,
+    listUtilizadorById,
+    updateRolesUtilizador,
+    updateEstadoUtilizador
 }
 
 const listUtilizadorById = async (Id) => {

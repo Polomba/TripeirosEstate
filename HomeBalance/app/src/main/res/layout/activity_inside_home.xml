@@ -62,50 +62,51 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_beige"
-        android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/dark_beige">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
             android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginEnd="20dp">
 
             <ImageView
                 android:id="@+id/imageHome"
-                android:layout_width="38dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:src="@drawable/icons8_home_96px_7" />
+                android:onClick="openHome"
+                android:layout_width="22dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icons8_home_96px_7"
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
+            android:orientation="vertical"
             android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginStart="100dp">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@drawable/icons8_person_96px" />
+                android:src="@drawable/icons8_person_96px"
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Profile"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"/>
         </LinearLayout>
     </LinearLayout>
 

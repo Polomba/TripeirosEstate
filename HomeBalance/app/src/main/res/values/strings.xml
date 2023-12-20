@@ -12,6 +12,11 @@
     <string name="fgpass">Forgot Password?</string>
     <string name="members">Members:</string>
     <string name="teste">Teste</string>
-    <string name="datacriacao">Data de Criaçao da Tarefa</string>
-    <string name="datalimite">Data de Limite da Tarefa</string>
+    <string name="datacriacao">Task Creation Date</string>
+    <string name="datalimite">Task Deadline</string>
+    <string name="adicionarCasa">Add House</string>
+    <string name="housename">House Name:</string>
+    <string name="houseaddress">House Address:</string>
+    <string name="invite">Invite Participants</string>
+    <string name="addhouse">Add House</string>
 </resources>

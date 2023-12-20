@@ -20,4 +20,9 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this, InsideHomeActivity::class.java)
         startActivity(intent)
     }
+
+    fun createHome(v:View){
+        val intent = Intent(this, AddHomeActivity::class.java)
+        startActivity(intent)
+    }
 }

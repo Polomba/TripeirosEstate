@@ -31,7 +31,7 @@
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:onClick="createTask"
+            android:onClick="CreateTask"
             android:src="@drawable/icons8_add_96px" />
 
     </LinearLayout>

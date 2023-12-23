@@ -57,6 +57,8 @@
         app:layout_constraintTop_toBottomOf="@id/et_TaskName"
         android:layout_marginLeft="10dp">
 
+
+
         <!-- Guideline to limit the TextViews and DatePickers -->
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -92,7 +94,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
+                android:datePickerMode="spinner"
+                />
 
             <!-- TextView for task deadline -->
             <TextView
@@ -110,7 +113,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
+                android:datePickerMode="spinner"/>
         </LinearLayout>
 
         <!-- ImageView -->
@@ -170,7 +173,7 @@
                     android:text="@string/tasktodo"
                     android:textSize="17sp"/>
 
-                <EditText
+                <TextView
                     android:background="@color/dark_beige"
                     android:layout_width="175dp"
                     android:layout_height="100dp"
@@ -191,7 +194,7 @@
                     android:text="@string/task_description"
                     android:textSize="17sp"/>
 
-                <EditText
+                <TextView
                     android:background="@color/dark_beige"
                     android:layout_width="175dp"
                     android:layout_height="100dp"
@@ -208,7 +211,7 @@
         android:id="@+id/tv_responsible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/responsible"
+        android:text="@string/state"
         app:layout_constraintTop_toBottomOf="@id/TaskDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -218,6 +221,7 @@
         android:layout_marginTop="10dp"/>
 
     <Spinner
+        android:id="@+id/spinnerResponsible"
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
@@ -226,17 +230,27 @@
         app:layout_constraintTop_toBottomOf="@id/tv_responsible"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="doReview"
+        app:layout_constraintTop_toBottomOf="@id/btnCreateTask"
+        android:text="@string/doReview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 
     <Button
         android:id="@+id/btnCreateTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/Bottom_Layout"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginRight="17dp"
         android:layout_marginLeft="17dp"
         android:backgroundTint="@color/logo_blue"
-        android:text="@string/createtask"
+        android:text="@string/concludetask"
         />
 
     <LinearLayout

@@ -25,7 +25,7 @@ class InsideHomeActivity : AppCompatActivity() {
     }
 
     fun CreateTask ( V: View){
-        val intent = Intent(this, AddTaskActivity::class.java)
+        val intent = Intent(this, TaskDetailActivity::class.java)
         startActivity(intent)
     }
 }

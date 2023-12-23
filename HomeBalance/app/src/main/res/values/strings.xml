@@ -21,6 +21,11 @@
     <string name="addhouse">Add House</string>
     <string name="taskname">Task Name:</string>
     <string name="createtask">Create Task</string>
-    <string name="task_name">To Do:</string>
+    <string name="tasktodo">To Do:</string>
     <string name="task_description">Add a comment:</string>
+    <string name="responsible">Task Responsible:</string>
+    <string name="state">Task State:</string>
+    <string name="concludetask">Conclude Task</string>
+    <string name="doReview">Make Review</string>
+    <string name="writeReview">Write a Review...</string>
 </resources>

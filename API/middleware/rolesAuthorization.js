@@ -1,6 +1,6 @@
 'use strict'
 const jwt = require('jsonwebtoken');
-const utilizadorData = require('../data/utilizadorService');
+const utilizadorData = require('../data/userService');
 const utils = require('../utils/utils');
 
 const checkRolePremium = async (req, res, next) => {

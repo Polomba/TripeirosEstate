@@ -11,7 +11,6 @@ const getTarefas = async (req, res) => {
         res.status(400).send(error.message);
     }
 }
-
 const getTarefa = async (req, res)=> {
     try {
         const tarefaId = req.params.Id;

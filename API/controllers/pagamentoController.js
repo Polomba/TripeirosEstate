@@ -1,6 +1,6 @@
 'use strict'
 const pagamentoData = require('../data/pagamentoService');
-const utilizadorData = require("../data/utilizadorService");
+const utilizadorData = require("../data/userService");
 const utils = require("../utils/utils");
 
 const getPagamentos = async (req, res) => {
@@ -107,7 +107,6 @@ module.exports = {
     getPagamentosPremium,
     getPagamentoPremiumNaoPago,
     getTopPagamentoPremium,
-    addPagamentoPedido,
     addPagamentoPremium,
     updatePagamento
 }

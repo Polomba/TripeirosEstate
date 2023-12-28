@@ -28,4 +28,11 @@
     <string name="concludetask">Conclude Task</string>
     <string name="doReview">Make Review</string>
     <string name="writeReview">Write a Review...</string>
+    <string name="joinpremium">Join Premium</string>
+    <string name="managemhomes">Manage Homes</string>
+    <string name="unlimitedtask">Unlimited Tasks</string>
+    <string name="taskphotos">Add Task Photos</string>
+    <string name="addhomes">Add Homes</string>
+    <string name="nrResidences">Number of Homes:</string>
+    <string name="nrConcludedTasks">Number of Concluded Tasks</string>
 </resources>

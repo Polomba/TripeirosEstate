@@ -33,7 +33,6 @@
             android:layout_gravity="center_vertical"
             android:onClick="addHome"
             android:src="@drawable/icons8_add_96px" />
-
     </LinearLayout>
 
 

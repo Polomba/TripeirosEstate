@@ -49,16 +49,6 @@ const updateReviewTask = async (uId, data) => {
          */
         let query = 'UPDATE [dbo].[Review] SET ';
         const inputParams = ['Comment', 'Rating'];
-        /**
-         * Este código constrói uma consulta SQL dinâmica com base em um conjunto de parâmetros de entrada.
-         * A consulta é usada para atualizar registros em um banco de dados.
-         *
-         * @param {Array} inputParams - Lista de parâmetros de entrada.
-         * @param {Object} data - Dados fornecidos para construir a consulta.
-         * @param {string} uId - Valor da variável "uId".
-         * @param {string} tId - Valor da variável "tId".
-         * @returns {string} - Consulta SQL final.
-         */
         for (const param of inputParams) {
             query += data[param] ? `${param} = @${param}, ` : '';
         }

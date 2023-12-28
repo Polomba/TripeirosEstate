@@ -1,10 +1,10 @@
 'use strict'
 
-const produtoData = require('../data/produtoService');
+const tarefaData = require('../data/tarefaService');
 
 const getTarefas = async (req, res) => {
     try {
-        const tarefas = await produtoData.listTarefas();
+        const tarefas = await tarefaData.listTarefas();
         res.send(tarefas);
     }
     catch (error) {

@@ -89,12 +89,7 @@ const updateEstadoUtilizador = async (Id, Roles) => {
 }
 
 
-module.exports={
-    listUtilizadores,
-    listUtilizadorById,
-    updateRolesUtilizador,
-    updateEstadoUtilizador
-}
+
 
 const listUtilizadorById = async (Id) => {
     try {

@@ -6,9 +6,9 @@ const checkRoles = require("../middleware/rolesAuthorization");
 const checkTaskRoles = require("../middleware/rolesTaskLimite")
 const router = express.Router();
 
-const {getTarefa, getTarefa, addTarefa, updateTarefa, deleteTarefa} = tarefaController;
+const {getTarefas, getTarefa, addTarefa, updateTarefa, deleteTarefa} = tarefaController;
 
-router.get('/Tarefa', authCookie.authCookieVerify, getTarefa);
+router.get('/Tarefas', authCookie.authCookieVerify, getTarefas);
 router.get('/Tarefa/:Id', authCookie.authCookieVerify, getTarefa);
 
 router.post('/Tarefa', authCookie.authCookieVerify, checkTaskRoles.checkRoleTaskLimite, addTarefa);

@@ -39,15 +39,22 @@ const listCommentsByTaskId = async (taskId) => {
 
 const createCommentTask = async (data) => {
     try {
+        const { Comment, TaskId, UserId } = data;
+        const taskExists = await checkTaskExists(TaskId);
+
+        if (!taskExists) {
+            throw new Error('Tarefa não encontrada. Não é possível adicionar um comentário para uma tarefa inexistente.');
+        }
+
         let pool = await sql.connect(config.sql);
         let query = 'INSERT INTO [dbo].[Coments] ' +
             '([Comment],[TaskId],[UserId]) ' +
             'VALUES (@Comment, @TaskId, @UserId) ';
 
         const insertConteudo = await pool.request()
-            .input('Comment', sql.VarChar(255), data.Comment)
-            .input('TaskId', sql.Int, data.TaskId)
-            .input('UserId', sql.Int, data.UserId)
+            .input('Comment', sql.VarChar(255), Comment)
+            .input('TaskId', sql.Int, TaskId)
+            .input('UserId', sql.Int, UserId)
             .query(query);
 
         return insertConteudo.recordset;
@@ -57,22 +64,45 @@ const createCommentTask = async (data) => {
     }
 }
 
-const updateCommentTask = async (uId, data) => {
+
+const checkTaskExists = async (taskId) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        let query = 'SELECT COUNT(*) AS Count FROM [dbo].[Task] WHERE [Id] = @taskId';
+
+        const result = await pool.request()
+            .input('taskId', sql.Int, taskId)
+            .query(query);
+
+        return result.recordset[0].Count > 0;
+    } catch (error) {
+        throw new Error('Erro ao verificar se a tarefa existe.');
+    }
+}
+
+
+const updateCommentTask = async (commentId, data) => {
     try {
         let pool = await sql.connect(config.sql);
         let query = 'UPDATE [dbo].[Coments] SET ';
-        const inputParams = ['Comment'];
+
+        const inputParams = ['Comment', 'TaskId', 'UserId'];
+
         for (const param of inputParams) {
             query += data[param] ? `${param} = @${param}, ` : '';
         }
+
         query = query.slice(0, -2);
-        query +=` WHERE [UserId]=@uId AND [TaskId]=@tId`
+
+        query += ' WHERE [Id] = @commentId;';
 
         const update = await pool.request()
-            .input('uId', sql.Int, uId)
-            .input('tId', sql.Int, data.tId)
+            .input('commentId', sql.Int, commentId)
             .input('Comment', sql.VarChar(255), data.Comment)
+            .input('TaskId', sql.Int, data.TaskId)
+            .input('UserId', sql.Int, data.UserId)
             .query(query);
+
         return update.recordset;
     }
     catch (error) {
@@ -80,21 +110,22 @@ const updateCommentTask = async (uId, data) => {
     }
 }
 
-const deleteCommentTask = async (uId, data) => {
+const deleteCommentTask = async (commentId) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'DELETE [dbo].[Coments] WHERE [UserId]=@uId AND [TaskId]=@tId';
+        let query = 'DELETE [dbo].[Coments] WHERE [Id] = @commentId;';
 
-        const update = await pool.request()
-            .input('uId', sql.Int, uId)
-            .input('tId', sql.Int, data.tId)
+        const deleted = await pool.request()
+            .input('commentId', sql.Int, commentId)
             .query(query);
-        return update.recordset;
+
+        return deleted.recordset;
     }
     catch (error) {
         return error.message;
     }
 }
+
 
 module.exports = {
     listComments,

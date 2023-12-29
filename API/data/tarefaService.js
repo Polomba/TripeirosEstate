@@ -101,7 +101,7 @@ const updateTarefa = async (Id, tarefaData) => {
             .input('State', sql.VarChar(255), tarefaData.State)
             .input('Photo', sql.VarChar(255), tarefaData.Photo)
             .input('Homeid', sql.Int, tarefaData.Homeid)
-            .input('UserId', sql.Int, tarefaData.UserId) // Adicione os inputs para os campos faltantes
+            .input('UserId', sql.Int, tarefaData.UserId)
             .query(query);
 
         return update.recordset;

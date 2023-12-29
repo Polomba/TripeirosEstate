@@ -13,23 +13,25 @@ const listComments = async (req, res) => {
     }
 }
 
-const addCommentTask = async (req, res)=> {
+const addCommentTask = async (req, res) => {
     try {
-        const taskId = req.params.taskId;
-        const data = req.body;
-        const created = await commentTaskData.createCommentTask(taskId, data);
+        const { Comment } = req.body;
+        const { taskId } = req.params;
+        const userId = req.userId;
+
+        const created = await commentTaskData.createCommentTask(Comment, taskId, userId);
         res.send(created);
     }
     catch (error) {
         res.status(400).send(error.message);
     }
-}
+};
 
 const updateCommentTask = async (req, res)=> {
     try {
-        const taskId = req.params.taskId;
+        const commentId = req.params.commentId;
         const data = req.body;
-        const created = await commentTaskData.updateCommentTask(taskId, data);
+        const created = await commentTaskData.updateCommentTask(commentId, data);
         res.send(created);
     }
     catch (error) {

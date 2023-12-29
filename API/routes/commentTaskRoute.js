@@ -11,7 +11,7 @@ router.get('/CommentTask/:taskId', getCommentsByTaskId);
 
 router.post('/CommentTask/:taskId',addCommentTask);
 
-router.put('/CommentTask/:taskId', updateCommentTask);
+router.put('/CommentTask/:commentId', updateCommentTask);
 
 router.delete('/CommentTask/:commentId', deleteCommentTask);
 

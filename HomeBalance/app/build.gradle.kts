@@ -50,5 +50,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-messaging:20.2.1'")
+    implementation ("com.squareup.retrofit2:retrofit:2.4.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.4.0")
 
 }

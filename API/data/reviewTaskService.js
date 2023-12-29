@@ -44,9 +44,6 @@ const createReviewTask = async (Id, data) => {
 const updateReviewTask = async (uId, data) => {
     try {
         let pool = await sql.connect(config.sql);
-        /**
-         * Atualiza os campos "Comment" e "Rating" da tabela "Review".
-         */
         let query = 'UPDATE [dbo].[Review] SET ';
         const inputParams = ['Comment', 'Rating'];
         for (const param of inputParams) {

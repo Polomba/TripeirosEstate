@@ -1,11 +1,11 @@
 'use strict'
 
-const commnentTaskData = require('../data/commentTaskService');
+const commentTaskData = require('../data/commentTaskService');
 const utils = require('../utils/utils');
 
-const getCommentsTask = async (req, res) => {
+const listComments = async (req, res) => {
     try {
-        const revP = await commnentTaskData.listCommentsTasks();
+        const revP = await commentTaskData.listComments();
         res.send(revP);
     }
     catch (error) {
@@ -15,9 +15,9 @@ const getCommentsTask = async (req, res) => {
 
 const addCommentTask = async (req, res)=> {
     try {
-        const userId = req.params.userId;
+        const taskId = req.params.taskId;
         const data = req.body;
-        const created = await commnentTaskData.createCommentTask(userId, data);
+        const created = await commentTaskData.createCommentTask(taskId, data);
         res.send(created);
     }
     catch (error) {
@@ -27,9 +27,9 @@ const addCommentTask = async (req, res)=> {
 
 const updateCommentTask = async (req, res)=> {
     try {
-        const userId = req.params.userId;
+        const taskId = req.params.taskId;
         const data = req.body;
-        const created = await commnentTaskData.updateCommentTask(userId, data);
+        const created = await commentTaskData.updateCommentTask(taskId, data);
         res.send(created);
     }
     catch (error) {
@@ -39,9 +39,9 @@ const updateCommentTask = async (req, res)=> {
 
 const deleteCommentTask = async (req, res)=> {
     try {
-        const userId = req.params.userId;
+        const commentId = req.params.commentId;
         const data = req.body;
-        const deleted = await commnentTaskData.deleteCommentTask(userId,data);
+        const deleted = await commentTaskData.deleteCommentTask(commentId,data);
         res.send(deleted);
     }
     catch (error) {
@@ -49,9 +49,21 @@ const deleteCommentTask = async (req, res)=> {
     }
 }
 
+const getCommentsByTaskId = async (req, res) => {
+    try {
+        const taskId = req.params.taskId;
+        const comments = await commentTaskData.listCommentsByTaskId(taskId);
+
+        res.json(comments);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
-    getCommentsTask,
+    listComments,
     addCommentTask,
     updateCommentTask,
     deleteCommentTask,
+    getCommentsByTaskId
 }

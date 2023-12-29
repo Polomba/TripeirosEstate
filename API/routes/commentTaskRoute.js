@@ -1,20 +1,19 @@
 'use strict'
 const express = require('express');
-const reviewTaskController = require('../controllers/reviewTaskController')
-const authCookie = require("../middleware/authCookieVerify");
+const commentTaskController = require('../controllers/commentTaskController')
 const checkRoles = require("../middleware/rolesAuthorization");
 const router = express.Router();
 
-const {getCommentsTask, getCommentsTaskByUserId, addCommentTask, updateCommentTask, deleteCommentTask} = reviewTaskController;
+const {listComments, getCommentsByTaskId, addCommentTask, updateCommentTask, deleteCommentTask} = commentTaskController;
 
-router.get('/CommentTask', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, getCommentsTask);
-router.get('/CommentTaskUser/:userId', authCookie.authCookieVerify, getCommentsTaskByUserId);
+router.get('/CommentTask',listComments);
+router.get('/CommentTask/:taskId', getCommentsByTaskId);
 
-router.post('/CommentTask/:userId', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, addCommentTask);
+router.post('/CommentTask/:taskId',addCommentTask);
 
-router.put('/CommentTask/:userId', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, updateCommentTask);
+router.put('/CommentTask/:taskId', updateCommentTask);
 
-router.delete('/CommentTask/:userId', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, deleteCommentTask);
+router.delete('/CommentTask/:commentId', deleteCommentTask);
 
 
 module.exports = {

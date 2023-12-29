@@ -1,7 +1,6 @@
 'use strict'
 const express = require('express');
 const commentTaskController = require('../controllers/commentTaskController')
-const checkRoles = require("../middleware/rolesAuthorization");
 const router = express.Router();
 
 const {listComments, getCommentsByTaskId, addCommentTask, updateCommentTask, deleteCommentTask} = commentTaskController;

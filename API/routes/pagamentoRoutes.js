@@ -1,7 +1,6 @@
 'use strict'
 const express = require('express');
 const pagamentoController = require('../controllers/pagamentoController');
-const authCookie = require("../middleware/authCookieVerify");
 const premiumTier = require("../middleware/premiumTier");
 const pagamentoPedidos = require("../middleware/pagamentoPedido")
 const router = express.Router();

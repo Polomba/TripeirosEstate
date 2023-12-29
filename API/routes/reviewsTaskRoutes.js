@@ -15,7 +15,6 @@ router.put('/ReviewTask/:taskId', checkRoles.checkRoleTarefa, updateReviewTask);
 
 router.delete('/ReviewTask/:reviewId',deleteReviewTask);
 
-
 module.exports = {
     routes: router
 }

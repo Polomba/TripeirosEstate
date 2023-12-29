@@ -18,6 +18,25 @@ const listUtilizadores = async () => {
     }
 }
 
+const listUtilizadorById = async (Id)=> {
+    try {
+        let pool = await  sql.connect(config.sql);
+        let query = 'SELECT [Id],[Name],[Email],[Password]' +
+            ',[Roles],[Token]' +
+            'FROM [dbo].[User]' +
+            'WHERE [Id] = @Id';
+
+        const oneUtilizador = await pool.request()
+            .input('Id', sql.Int, Id)
+            .query(query);
+
+        return oneUtilizador.recordset;
+    }
+    catch (error) {
+        return  error.message;
+    }
+}
+
 const listUtilizadorByEmail = async (Email)=> {
     try {
         let pool = await  sql.connect(config.sql);
@@ -74,6 +93,7 @@ const updateEstadoUtilizador = async (Id, Roles) => {
 
 module.exports={
     listUtilizadores,
+    listUtilizadorById,
     listUtilizadorByEmail,
     updateRolesUtilizador,
     updateEstadoUtilizador

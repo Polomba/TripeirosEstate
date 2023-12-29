@@ -7,8 +7,8 @@ const utils = require('../utils/utils');
 const listReviewsTasks = async () => {
     try {
         let pool = await sql.connect(config.sql);
-            let query = 'SELECT [TaskId],[Id],[Rating],[Comment] ' +
-            'FROM [dbo].[Review]' +
+        let query = 'SELECT Review.TaskId, Review.Id AS ReviewId, Rating, Comment ' +
+            'FROM [dbo].[Review] ' +
             'JOIN [dbo].[Task] ON Task.Id = Review.TaskId';
 
         const list = await pool.request()
@@ -20,26 +20,27 @@ const listReviewsTasks = async () => {
     }
 }
 
-const createReviewTask = async (Id, data) => {
+
+const createReviewTask = async (reviewData) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'INSERT INTO [dbo].[Review] ' +
-            '([Id],[TaskId],[Comment],[Rating]) ' +
-            'VALUES (@UserId, @TaskId, @Comment, @Rating) ';
+        let query = `
+            INSERT INTO [dbo].[Review] (TaskId, Rating, Comment)
+            VALUES (@TaskId, @Rating, @Comment);
+        `;
 
-        const insertConteudo = await pool.request()
-            .input('UserId', sql.Int, Id)
-            .input('TaskId', sql.Int, data.TaskId)
-            .input('Comment', sql.VarChar(255), data.Comment)
-            .input('Rating', sql.Float, data.Rating)
+        const result = await pool.request()
+            .input('TaskId', sql.Int, reviewData.TaskId)
+            .input('Rating', sql.Float, reviewData.Rating)
+            .input('Comment', sql.VarChar(255), reviewData.Comment)
             .query(query);
 
-        return insertConteudo.recordset;
-    }
-    catch (error) {
+        return result.recordset;
+    } catch (error) {
         return error.message;
     }
-}
+};
+
 
 const updateReviewTask = async (uId, data) => {
     try {
@@ -65,21 +66,21 @@ const updateReviewTask = async (uId, data) => {
     }
 }
 
-const deleteReviewTask = async (uId, data) => {
+const deleteReviewTask = async (uId) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'DELETE [dbo].[Review] WHERE [Id]=@uId AND [TaskId]=@tId';
+        let query = 'DELETE FROM [dbo].[Review] WHERE [Id] = @uId';
 
         const update = await pool.request()
             .input('uId', sql.Int, uId)
-            .input('tId', sql.Int, data.tId)
             .query(query);
+
         return update.recordset;
-    }
-    catch (error) {
+    } catch (error) {
         return error.message;
     }
-}
+};
+
 
 module.exports = {
     listReviewsTasks,

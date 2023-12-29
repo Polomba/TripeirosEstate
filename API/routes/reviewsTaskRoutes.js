@@ -7,13 +7,14 @@ const router = express.Router();
 
 const {getReviewsTask, addReviewTask, updateReviewTask, deleteReviewTask} = reviewTaskController;
 
-router.get('/ReviewsTask', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, getReviewsTask);
+router.get('/ReviewsTask',authCookie.authCookieVerify, checkRoles.checkRoleTarefa,  getReviewsTask);
+router.get('/ReviewsTask/:taskId',authCookie.authCookieVerify, checkRoles.checkRoleTarefa,  getReviewsTask);
 
-router.post('/ReviewTask/:userId', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, addReviewTask);
+router.post('/ReviewTask/:taskId', addReviewTask);
 
-router.put('/ReviewTask/:userId', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, updateReviewTask);
+router.put('/ReviewTask/:taskId', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, updateReviewTask);
 
-router.delete('/ReviewTask/:userId', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, deleteReviewTask);
+router.delete('/ReviewTask/:reviewId',deleteReviewTask);
 
 
 module.exports = {

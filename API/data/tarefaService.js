@@ -40,7 +40,7 @@ const listTarefaByTittle = async (Tittle)=> {
     try {
         let pool = await  sql.connect(config.sql);
         let query = 'SELECT [Id],[Tittle],[Description],[Data]' +
-            'FROM [dbo].[Tarefa]' +
+            'FROM [dbo].[Task]' +
             'WHERE [Tittle] = @Tittle';
 
         const oneTarefa = await pool.request()
@@ -57,43 +57,51 @@ const listTarefaByTittle = async (Tittle)=> {
 const createTarefa = async (tarefaData) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'INSERT INTO [dbo].[Tarefa] ' +
-            '([Tittle],[Description],[Data],[Photo]) ' +
-            'VALUES (@Tittle, @Description, @Data, @Photo) ' +
-            'SELECT SCOPE_IDENTITY() AS Id';
+        let query = `
+            INSERT INTO [dbo].[Task] 
+            ([Tittle], [Description], [Data], [State], [Photo], [Homeid], [UserId]) 
+            VALUES 
+            (@Tittle, @Description, @Data, @State, @Photo, @Homeid, @UserId);
+            SELECT SCOPE_IDENTITY() AS Id;
+        `;
 
         const insertConteudo = await pool.request()
             .input('Tittle', sql.VarChar(255), tarefaData.Tittle)
             .input('Description', sql.VarChar(255), tarefaData.Description)
-            .input('Data', sql.DataTime, tarefaData.Data)
+            .input('Data', sql.Date, tarefaData.Data)
+            .input('State', sql.VarChar(255), tarefaData.State)
             .input('Photo', sql.VarChar(255), tarefaData.Photo)
-
+            .input('Homeid', sql.Int, tarefaData.Homeid)
+            .input('UserId', sql.Int, tarefaData.UserId)
             .query(query);
 
         return insertConteudo.recordset;
-    }
-    catch (error) {
+    } catch (error) {
         return error.message;
     }
-}
+};
+
 
 const updateTarefa = async (Id, tarefaData) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'UPDATE [dbo].[Tarefa] SET ';
-        const inputParams = ['Tittle', 'Description', 'Data', 'Photo'];
+        let query = 'UPDATE [dbo].[Task] SET ';
+        const inputParams = ['Tittle', 'Description', 'Data', 'State', 'Photo', 'Homeid', 'UserId']; // Adicione os campos faltantes aqui
         for (const param of inputParams) {
             query += tarefaData[param] ? `${param} = @${param}, ` : '';
         }
         query = query.slice(0, -2); // remove trailing comma and space
-        query +=` WHERE [Id]=@Id`
+        query +=` WHERE [Id]=@Id`;
 
         const update = await pool.request()
             .input('Id', sql.Int, Id)
             .input('Tittle', sql.VarChar(255), tarefaData.Tittle)
             .input('Description', sql.VarChar(255), tarefaData.Description)
-            .input('Data', sql.DataTime, tarefaData.Data)
+            .input('Data', sql.DateTime, tarefaData.Data)
+            .input('State', sql.VarChar(255), tarefaData.State)
             .input('Photo', sql.VarChar(255), tarefaData.Photo)
+            .input('Homeid', sql.Int, tarefaData.Homeid)
+            .input('UserId', sql.Int, tarefaData.UserId) // Adicione os inputs para os campos faltantes
             .query(query);
 
         return update.recordset;
@@ -101,12 +109,12 @@ const updateTarefa = async (Id, tarefaData) => {
     catch (error) {
         return error.message;
     }
-}
+};
 
 const deleteTarefa = async (Id) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'DELETE [dbo].[Tarefa] WHERE [Id]=@Id;'
+        let query = 'DELETE [dbo].[Task] WHERE [Id]=@Id;'
 
         const deleted = await pool.request()
             .input('Id', sql.Int, Id)

@@ -13,9 +13,9 @@ router.get('/Tarefa/:Id', authCookie.authCookieVerify, getTarefa);
 
 router.post('/Tarefa', authCookie.authCookieVerify, checkTaskRoles.checkRoleTaskLimite, addTarefa);
 
-router.put('/Tarefa/:Id', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, updateTarefa);
+router.put('/Tarefa/:Id', updateTarefa);
 
-router.delete('/Tarefa/:Id', authCookie.authCookieVerify, checkRoles.checkRoleTarefa, deleteTarefa);
+router.delete('/Tarefa/:Id', deleteTarefa);
 
 module.exports = {
     routes: router

@@ -13,23 +13,44 @@ const getReviewsTask = async (req, res) => {
     }
 }
 
-const addReviewTask = async (req, res)=> {
+const getReviewsByTaskId = async (taskId) => {
     try {
-        const userId = req.params.userId;
-        const data = req.body;
-        const created = await reviewTaskData.createReviewTask(userId, data);
-        res.send(created);
+        let pool = await sql.connect(config.sql);
+        let query = `
+            SELECT * FROM [dbo].[Review] WHERE [TaskId] = @taskId;
+        `;
+
+        const result = await pool.request()
+            .input('taskId', sql.Int, taskId)
+            .query(query);
+
+        return result.recordset;
+    } catch (error) {
+        return error.message;
     }
-    catch (error) {
+};
+
+
+const addReviewTask = async (req, res) => {
+    try {
+        const reviewData = {
+            TaskId: req.params.taskId,
+            Rating: req.body.Rating,
+            Comment: req.body.Comment
+        };
+
+        const created = await reviewTaskData.createReviewTask(reviewData);
+        res.send(created);
+    } catch (error) {
         res.status(400).send(error.message);
     }
-}
+};
+
 
 const updateReviewTask = async (req, res)=> {
     try {
-        const userId = req.params.userId;
         const data = req.body;
-        const created = await reviewTaskData.updateReviewTask(userId, data);
+        const created = await reviewTaskData.updateReviewTask(taskId, data);
         res.send(created);
     }
     catch (error) {
@@ -39,9 +60,9 @@ const updateReviewTask = async (req, res)=> {
 
 const deleteReviewTask = async (req, res)=> {
     try {
-        const userId = req.params.userId;
+        const reviewId = req.params.reviewId;
         const data = req.body;
-        const deleted = await reviewTaskData.deleteReviewTask(userId,data);
+        const deleted = await reviewTaskData.deleteReviewTask(reviewId,data);
         res.send(deleted);
     }
     catch (error) {
@@ -53,4 +74,5 @@ module.exports = {
     addReviewTask,
     updateReviewTask,
     deleteReviewTask,
+    getReviewsByTaskId
 }

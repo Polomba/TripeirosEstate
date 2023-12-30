@@ -1,8 +1,6 @@
 'use strict'
 
 const houseData = require('../data/houseService');
-const utils = require('../utils/utils');
-const tarefaData = require("../data/tarefaService");
 
 
 const listHouses = async (req, res) => {
@@ -26,7 +24,7 @@ const addHouse = async (req, res) => {
 
 const updateHouse = async (req, res) => {
     try {
-        const houseId = req.params.Id;
+        const houseId = req.params.HouseId;
         const data = req.body;
         const updated = await houseData.updateHouse(houseId, data);
         res.send(updated);
@@ -37,6 +35,9 @@ const updateHouse = async (req, res) => {
 
 const deleteHouse = async (req, res) => {
     try {
+        const houseId = req.params.HouseId;
+        const deleted = await houseData.deleteHouse(houseId);
+        res.send(deleted);
 
     } catch (error) {
         res.status(400).send(error.message);

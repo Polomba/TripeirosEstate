@@ -90,7 +90,7 @@ const updateTarefa = async (Id, tarefaData) => {
         for (const param of inputParams) {
             query += tarefaData[param] ? `${param} = @${param}, ` : '';
         }
-        query = query.slice(0, -2); // remove trailing comma and space
+        query = query.slice(0, -2);
         query +=` WHERE [Id]=@Id`;
 
         const update = await pool.request()

@@ -6,7 +6,7 @@ const router = express.Router();
 
 const {getTarefas, getTarefa, addTarefa, updateTarefa, deleteTarefa} = tarefaController;
 
-router.get('/Tarefas',  getTarefas);
+router.get('/Tarefa', getTarefas);
 router.get('/Tarefa/:Id', getTarefa);
 
 router.post('/Tarefa', checkTaskRoles.checkRoleTaskLimite, addTarefa);

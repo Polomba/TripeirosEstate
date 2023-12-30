@@ -49,14 +49,14 @@ const updateHouse = async (houseId, updatedHouseData) => {
         query = query.slice(0, -2);
         query += ` WHERE [id] = @houseId`;
 
-        const result = await pool.request()
+        const update = await pool.request()
             .input('houseId', sql.Int, houseId)
             .input('Name', sql.VarChar(255), updatedHouseData.Name)
             .input('Adress', sql.VarChar(255), updatedHouseData.Adress)
 
             .query(query);
 
-        return result.recordset;
+        return update.recordset;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -64,6 +64,14 @@ const updateHouse = async (houseId, updatedHouseData) => {
 
 const deleteHouse = async (houseId) => {
     try {
+        let pool = await sql.connect(config.sql);
+        let query = 'DELETE [dbo].[Home] WHERE [id] = @houseId;';
+
+        const deleted = await pool.request()
+            .input('houseId', sql.Int, houseId)
+            .query(query);
+
+        return deleted.recordset;
 
     } catch (error) {
         throw new Error(error.message);

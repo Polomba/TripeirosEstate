@@ -40,9 +40,10 @@ const listUtilizadorById = async (Id)=> {
 const listUtilizadorByEmail = async (Email)=> {
     try {
         let pool = await  sql.connect(config.sql);
-        let query = 'SELECT [Id],[Name],[Email],[Roles],[Token],[ProfilePicture]' +
-            'FROM [dbo].[User]' +
+        let query = 'SELECT [Id],[Name],[Email],[Password],[Roles],[Token],[ProfilePicture] ' +
+            'FROM [dbo].[User] ' +
             'WHERE [Email] = @Email';
+
 
         const oneUtilizador = await pool.request()
             .input('Email', sql.VarChar(255), Email)
@@ -73,42 +74,74 @@ const updateRolesUtilizador = async (Id, Roles) => {
     }
 }
 
-const createUtilizador = async (data) => {
+const createUtilizador = async (userData) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = `INSERT INTO [dbo].[User] 
-            ([Name], [Email], [Password], [Roles], [Token], [ProfilePicture]
+        let query = `
+            INSERT INTO [dbo].[User]
+                ([Name], [Email], [Password], [Roles], [Token], [ProfilePicture])
             VALUES (@Name, @Email, @Password, @Roles, @Token, @ProfilePicture);
             SELECT SCOPE_IDENTITY() AS Id;
         `;
 
-        const insertConteudo = await pool.request()
-            .input('Name', sql.VarChar(255), data.Name)
-            .input('Email', sql.VarChar(255), data.Email)
-            .input('Password', sql.VarChar(255), data.Password)
-            .input('Roles', sql.VarChar(255), data.Roles)
-            .input('Token', sql.VarChar(255), data.Token)
-            .input('ProfilePicture', sql.VarChar(255), data.ProfilePicture)
+        let result = await pool.request()
+            .input('Name', sql.VarChar(255), userData.Name)
+            .input('Email', sql.VarChar(255), userData.Email)
+            .input('Password', sql.VarChar(255), userData.Password)
+            .input('Roles', sql.VarChar(255), utils.user_roles.UR_Normal)
+            .input('Token', sql.VarChar(512), userData.Token)
+            .input('ProfilePicture', sql.VarChar(255), userData.ProfilePicture)
             .query(query);
-
-        return insertConteudo.recordset;
+        return result.recordset;
     } catch (error) {
-        return error.message;
+        throw new Error(`Erro ao criar novo usuário: ${error.message}`);
     }
 };
+
+
 
 const deleteUtilizador = async (Id) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'DELETE [dbo].[Task] WHERE [Id]=@Id;'
 
+        let deleteResidentsQuery = 'DELETE FROM [dbo].[Residents] WHERE [UserId] = @Id;';
+        await pool.request().input('Id', sql.Int, Id).query(deleteResidentsQuery);
+
+        let deleteTaskQuery = 'DELETE FROM [dbo].[Task] WHERE [UserId] = @Id;';
+        await pool.request().input('Id', sql.Int, Id).query(deleteTaskQuery);
+
+        let deletePaymentQuery = 'DELETE FROM [dbo].[Payment] WHERE [UserId] = @Id;';
+        await pool.request().input('Id', sql.Int, Id).query(deletePaymentQuery);
+
+        let deleteTaskParticipant = 'DELETE FROM [dbo].[TaskPartipants] WHERE [UserId] = @Id';
+        await pool.request().input('Id', sql.Int, Id).query(deleteTaskParticipant);
+
+
+        let query = 'DELETE FROM [dbo].[User] WHERE [Id] = @Id;';
         const deleted = await pool.request()
             .input('Id', sql.Int, Id)
             .query(query);
+
         return deleted.recordset;
+    } catch (error) {
+        console.error('Erro ao deletar usuário:', error.message);
+        return { error: error.message };
     }
-    catch (error) {
-        return error.message;
+};
+
+
+async function updateUserToken(userId, newToken) {
+    try {
+        let pool = await sql.connect(config);
+        let result = await pool
+            .request()
+            .input('Token', sql.VarChar(512), newToken)
+            .input('UserId', sql.Int, userId)
+            .query('UPDATE [User] SET Token = @Token WHERE Id = @UserId');
+
+        return result.rowsAffected;
+    } catch (error) {
+        throw new Error(`Erro ao atualizar token: ${error.message}`);
     }
 }
 
@@ -118,5 +151,6 @@ module.exports={
     listUtilizadorByEmail,
     updateRolesUtilizador,
     createUtilizador,
-    deleteUtilizador
+    deleteUtilizador,
+    updateUserToken
 }

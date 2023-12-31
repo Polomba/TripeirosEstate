@@ -1,0 +1,772 @@
+openapi: 3.0.0
+info:
+  title: Documentação da API HomeBalance
+  description: HomeBalance é uma aplicação para gerir tarefas domésticas
+  version: 1.0.0
+
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+
+tags:
+  - name: Utilizadores
+    description: Operações relacionadas aos utilizadores
+  - name: Comentários
+    description: Operações relacionadas aos comentários de tarefa
+  - name: Residentes
+    description: Operações relacionadas aos residentes
+  - name : Tarefas
+    description: Operações relacionadas às tarefas
+  - name : Reviews
+    description: Operações relacionadas às reviews
+  - name : Casa
+    description: Operações relacionadas a casas
+  - name : Autenticação
+    description: Operações relacionadas à autenticação
+
+
+paths:
+  /api/Utilizadores:
+    get:
+      summary: Retorna todos os utilizadores
+      tags:
+        - Utilizadores
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+    post:
+      summary: Cria um novo utilizador
+      tags:
+        - Utilizadores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Utilizador criado com sucesso
+        '400':
+          description: Requisição inválida
+  /api/Utilizadores/{Id}:
+    get:
+      summary: Obtém um utilizador pelo ID
+      tags:
+        - Utilizadores
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          description: ID do utilizador a ser obtido
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Utilizador encontrado com sucesso
+        '400':
+          description: Requisição inválida
+
+    put:
+      summary: Atualiza um utilizador pelo ID
+      tags:
+        - Utilizadores
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          description: ID do utilizador a ser atualizado
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Utilizador atualizado com sucesso
+        '400':
+          description: Requisição inválida
+
+    delete:
+      summary: Deleta um utilizador pelo ID
+      tags:
+        - Utilizadores
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          description: ID do utilizador a ser deletado
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Utilizador deletado com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/Tarefa:
+    get:
+      summary: Lista todas as tarefas
+      tags:
+        - Tarefas
+      responses:
+        '200':
+          description: Lista de tarefas retornada com sucesso
+        '400':
+          description: Requisição inválida
+    post:
+      summary: Cria uma nova tarefa
+      tags:
+        - Tarefas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarefa'
+      responses:
+        '201':
+          description: Tarefa criada com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/Tarefa/{Id}:
+    get:
+      summary: Obtém uma tarefa pelo ID
+      tags:
+        - Tarefas
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          description: ID da tarefa a ser obtida
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tarefa encontrada com sucesso
+        '400':
+          description: Requisição inválida
+
+
+    put:
+      summary: Atualiza uma tarefa pelo ID
+      tags:
+        - Tarefas
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          description: ID da tarefa a ser atualizada
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarefa'
+      responses:
+        '200':
+          description: Tarefa atualizada com sucesso
+        '400':
+          description: Requisição inválida
+
+    delete:
+      summary: Deleta uma tarefa pelo ID
+      tags:
+        - Tarefas
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          description: ID da tarefa a ser deletada
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tarefa deletada com sucesso
+        '400':
+          description: Requisição inválida
+
+
+  /api/CommentTask:
+    get:
+      summary: Retorna todos os comentários de tarefa
+      tags:
+        - Comentários
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentTask'
+    post:
+      summary: Cria um novo comentário de tarefa
+      tags:
+        - Comentários
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentTask'
+      responses:
+        '201':
+          description: Comentário de tarefa criado com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/CommentTask/{commentId}:
+    get:
+      summary: Retorna um comentário de tarefa específico
+      tags:
+        - Comentários
+      parameters:
+        - in: path
+          name: commentId
+          required: true
+          description: ID do comentário de tarefa
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentTask'
+
+    put:
+      summary: Atualiza um comentário de tarefa existente
+      tags:
+        - Comentários
+      parameters:
+        - in: path
+          name: commentId
+          required: true
+          description: ID do comentário de tarefa a ser atualizado
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentTask'
+      responses:
+        '200':
+          description: Comentário de tarefa atualizado com sucesso
+        '400':
+          description: Requisição inválida
+
+    delete:
+      summary: Deleta um comentário de tarefa existente
+      tags:
+        - Comentários
+      parameters:
+        - in: path
+          name: commentId
+          required: true
+          description: ID do comentário de tarefa a ser deletado
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Comentário de tarefa deletado com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/ReviewsTask:
+    get:
+      summary: Retorna todas as revisões de tarefa
+      tags:
+        - Reviews
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewTask'
+
+  /api/ReviewTask/{taskId}:
+    post:
+      summary: Cria uma nova revisão para uma tarefa específica
+      tags:
+        - Reviews
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          description: ID da tarefa associada à revisão
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewTask'
+      responses:
+        '201':
+          description: Revisão de tarefa criada com sucesso
+        '400':
+          description: Requisição inválida
+
+    put:
+      summary: Atualiza uma revisão de tarefa existente
+      tags:
+        - Reviews
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          description: ID da tarefa associada à revisão
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewTask'
+      responses:
+        '200':
+          description: Revisão de tarefa atualizada com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/ReviewTask/{reviewId}:
+    delete:
+      summary: Deleta uma revisão de tarefa existente
+      tags:
+        - Reviews
+      parameters:
+        - in: path
+          name: reviewId
+          required: true
+          description: ID da revisão de tarefa a ser deletada
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Revisão de tarefa deletada com sucesso
+        '400':
+          description: Requisição inválida
+
+
+  /api/Resident:
+    post:
+      summary: Adiciona um novo residente
+      tags:
+        - Residentes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Resident'
+      responses:
+        '201':
+          description: Residente adicionado com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/Resident/{HouseId}:
+    get:
+      summary: Retorna todos os residentes de uma casa específica
+      tags:
+        - Residentes
+      parameters:
+        - in: path
+          name: HouseId
+          required: true
+          description: ID da casa para listar os residentes
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resident'
+
+  /api/Resident/{ResidentId}:
+    delete:
+      summary: Deleta um residente pelo ID
+      tags:
+        - Residentes
+      parameters:
+        - in: path
+          name: ResidentId
+          required: true
+          description: ID do residente a ser deletado
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Residente deletado com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/House:
+    get:
+      summary: Retorna todas as casas
+      tags:
+        - Casa
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/House'
+
+    post:
+      summary: Adiciona uma nova casa
+      tags:
+        - Casa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/House'
+      responses:
+        '201':
+          description: Casa adicionada com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/House/{HouseId}:
+    put:
+      summary: Atualiza uma casa pelo ID
+      tags:
+        - Casa
+      parameters:
+        - in: path
+          name: HouseId
+          required: true
+          description: ID da casa a ser atualizada
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/House'
+      responses:
+        '200':
+          description: Casa atualizada com sucesso
+        '400':
+          description: Requisição inválida
+
+    delete:
+      summary: Deleta uma casa pelo ID
+      tags:
+        - Casa
+      parameters:
+        - in: path
+          name: HouseId
+          required: true
+          description: ID da casa a ser deletada
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Casa deletada com sucesso
+        '400':
+          description: Requisição inválida
+
+
+  /api/authLogin:
+    post:
+      summary: Autentica um utilizador
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+      responses:
+        '200':
+          description: Utilizador autenticado com sucesso
+        '400':
+          description: Credenciais inválidas
+
+  /api/authRegister:
+    post:
+      summary: Regista um novo utilizador
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        '201':
+          description: Utilizador registado com sucesso
+        '400':
+          description: Requisição inválida
+
+
+  /api/PagamentoPremium:
+    post:
+      summary: Adiciona um pagamento premium
+      tags:
+        - Pagamentos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PagamentoPremium'
+      responses:
+        '201':
+          description: Pagamento premium adicionado com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/Pagamento/{Id}:
+    put:
+      summary: Atualiza um pagamento pelo ID
+      tags:
+        - Pagamentos
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          description: ID do pagamento a ser atualizado
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pagamento'
+      responses:
+        '200':
+          description: Pagamento atualizado com sucesso
+        '400':
+          description: Requisição inválida
+
+  /api/Pagamentos:
+    get:
+      summary: Retorna todos os pagamentos
+      tags:
+        - Pagamentos
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pagamento'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        Id:
+          type: integer
+        Name:
+          type: string
+        Email:
+          type: string
+        Password:
+          type: string
+        Roles:
+          type: string
+        Token:
+          type: string
+        ProfilePicture:
+          type: string
+      required:
+        - Name
+        - Email
+        - Password
+        - Roles
+
+    CommentTask:
+      type: object
+      properties:
+        Id:
+          type: integer
+        Comment:
+          type: string
+        TaskId:
+          type: integer
+        UserId:
+          type: integer
+      required:
+        - Comment
+        - TaskId
+        - UserId
+
+    Resident:
+      type: object
+      properties:
+        UserId:
+          type: integer
+        HouseId:
+          type: integer
+      required:
+        - UserId
+        - HouseId
+
+    Tarefa:
+      type: object
+      properties:
+        Id:
+          type: integer
+        Titulo:
+          type: string
+        Descricao:
+          type: string
+        Data:
+          type: string
+        Estado:
+          type: string
+        Foto:
+          type: string
+        HomeId:
+          type: integer
+        UserId:
+          type: integer
+      required:
+        - Titulo
+        - Descricao
+        - Data
+        - Estado
+        - HomeId
+        - UserId
+
+    ReviewTask:
+      type: object
+      properties:
+        reviewId:
+          type: integer
+        taskId:
+          type: integer
+        rating:
+          type: number
+        comment:
+          type: string
+      required:
+        - taskId
+        - rating
+        - comment
+    House:
+      type: object
+      properties:
+        HouseId:
+          type: integer
+        Name:
+          type: string
+        Address:
+          type: string
+      required:
+        - Name
+
+    AuthUser:
+      type: object
+      properties:
+        Email:
+          type: string
+        Password:
+          type: string
+      required:
+        - Email
+        - Password
+
+    NewUser:
+      type: object
+      properties:
+        Name:
+          type: string
+        Email:
+          type: string
+        Password:
+          type: string
+      required:
+        - Name
+        - Email
+        - Password
+
+    Pagamento:
+      type: object
+      properties:
+        Value:
+          type: number
+        EmissionDate:
+          type: string
+          format: date
+        Paymentdate:
+          type: string
+          format: date
+        Description:
+          type: string
+        UserId:
+          type: integer
+        PaymentTypeId:
+          type: integer
+      required:
+        - Value
+        - EmissionDate
+        - Paymentdate
+        - UserId
+        - PaymentTypeId
+
+    PagamentoPremium:
+      type: object
+      properties:
+        Value:
+          type: number
+        EmissionDate:
+          type: string
+          format: date
+        Paymentdate:
+          type: string
+          format: date
+        Description:
+          type: string
+        UserId:
+          type: integer
+        PaymentTypeId:
+          type: integer
+      required:
+        - Value
+        - EmissionDate
+        - Paymentdate
+        - UserId
+        - PaymentTypeId

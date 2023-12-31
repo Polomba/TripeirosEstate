@@ -3,14 +3,11 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const router = express.Router();
 
-const {getUtilizadores, getUtilizador, addUtlizador, updateUtilizador, deleteUtilizador} = userController;
+const {getUtilizadores, getUtilizador,deleteUtilizador, getUtilizadorByEmail} = userController;
 
 router.get('/Utilizadores', getUtilizadores);
-router.get('/Utilizador/:Id', getUtilizador);
-
-router.post('/Utilizador', addUtlizador);
-
-router.put('/Utilizador/:Id', updateUtilizador);
+router.get('/Utilizadores/:Id', getUtilizador);
+router.get('/Utilizador/:Email', getUtilizadorByEmail);
 
 router.delete('/Utilizador/:Id', deleteUtilizador);
 

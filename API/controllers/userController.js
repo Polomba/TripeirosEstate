@@ -22,6 +22,17 @@ const getUtilizador = async (req, res)=> {
         res.status(400).send(error.message);
     }
 }
+
+const getUtilizadorByEmail = async (req, res)=> {
+    try {
+        const email = req.params.Email;
+        const oneUtilizador = await utilizadorData.listUtilizadorByEmail(email);
+        res.send(oneUtilizador);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
+}
 const addUtlizador = async (req, res)=> {
     try {
         const data = req.body;
@@ -60,5 +71,6 @@ module.exports = {
     getUtilizador,
     addUtlizador,
     updateRolesUtilizador,
-    deleteUtilizador
+    deleteUtilizador,
+    getUtilizadorByEmail
 }

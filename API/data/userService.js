@@ -58,23 +58,6 @@ const listUtilizadorByEmail = async (Email)=> {
 const updateRolesUtilizador = async (Id, Roles) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'UPDATE [dbo].[User] SET Roles = @Roles' +
-            'WHERE [Id]=@Id';
-
-        const update = await pool.request()
-            .input('Id', sql.Int, Id)
-            .input('Utilizador_Roles', sql.VarChar(255), Roles)
-            .query(query);
-
-        return update.recordset;
-    }
-    catch (error) {
-        return error.message;
-    }
-}
-const updateEstadoUtilizador = async (Id, Roles) => {
-    try {
-        let pool = await sql.connect(config.sql);
         let query = 'UPDATE [dbo].[User] SET Roles = @Roles ' +
             'WHERE [Id]=@Id';
 
@@ -90,11 +73,50 @@ const updateEstadoUtilizador = async (Id, Roles) => {
     }
 }
 
+const createUtilizador = async (data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        let query = `INSERT INTO [dbo].[User] 
+            ([Name], [Email], [Password], [Roles], [Token], [ProfilePicture]
+            VALUES (@Name, @Email, @Password, @Roles, @Token, @ProfilePicture);
+            SELECT SCOPE_IDENTITY() AS Id;
+        `;
+
+        const insertConteudo = await pool.request()
+            .input('Name', sql.VarChar(255), data.Name)
+            .input('Email', sql.VarChar(255), data.Email)
+            .input('Password', sql.VarChar(255), data.Password)
+            .input('Roles', sql.VarChar(255), data.Roles)
+            .input('Token', sql.VarChar(255), data.Token)
+            .input('ProfilePicture', sql.VarChar(255), data.ProfilePicture)
+            .query(query);
+
+        return insertConteudo.recordset;
+    } catch (error) {
+        return error.message;
+    }
+};
+
+const deleteUtilizador = async (Id) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        let query = 'DELETE [dbo].[Task] WHERE [Id]=@Id;'
+
+        const deleted = await pool.request()
+            .input('Id', sql.Int, Id)
+            .query(query);
+        return deleted.recordset;
+    }
+    catch (error) {
+        return error.message;
+    }
+}
 
 module.exports={
     listUtilizadores,
     listUtilizadorById,
     listUtilizadorByEmail,
     updateRolesUtilizador,
-    updateEstadoUtilizador
+    createUtilizador,
+    deleteUtilizador
 }

@@ -57,11 +57,9 @@ const listTarefaByTittle = async (Tittle)=> {
 const createTarefa = async (tarefaData) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = `
-            INSERT INTO [dbo].[Task] 
+        let query = `INSERT INTO [dbo].[Task] 
             ([Tittle], [Description], [Data], [State], [Photo], [Homeid], [UserId]) 
-            VALUES 
-            (@Tittle, @Description, @Data, @State, @Photo, @Homeid, @UserId);
+            VALUES (@Tittle, @Description, @Data, @State, @Photo, @Homeid, @UserId);
             SELECT SCOPE_IDENTITY() AS Id;
         `;
 
@@ -126,11 +124,27 @@ const deleteTarefa = async (Id) => {
     }
 }
 
+const countTasksCreatedByUserInCurrentWeek = async (Id)=>{
+        const now = new Date();
+
+        const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
+
+        const endOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 6);
+
+        const tasks = await Task.find({
+            user: Id,
+            createdAt: { $gte: startOfWeek, $lte: endOfWeek }
+        });
+
+        return tasks.length;
+    };
+
 module.exports = {
     listTarefas,
     listTarefaById,
     listTarefaByTittle,
     createTarefa,
     updateTarefa,
-    deleteTarefa
+    deleteTarefa,
+    countTasksCreatedByUserInCurrentWeek
 }

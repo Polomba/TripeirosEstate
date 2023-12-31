@@ -32,11 +32,11 @@ const addUtlizador = async (req, res)=> {
         res.status(400).send(error.message);
     }
 }
-const updateUtilizador = async (req, res)=> {
+const updateRolesUtilizador = async (req, res)=> {
     try {
         const utilizadorId = req.params.Id;
         const data = req.body;
-        const updated = await utilizadorData.updateUtilizador(utilizadorId, data);
+        const updated = await utilizadorData.updateRolesUtilizador(utilizadorId, data);
         res.send(updated);
     }
     catch (error) {
@@ -59,6 +59,6 @@ module.exports = {
     getUtilizadores,
     getUtilizador,
     addUtlizador,
-    updateUtilizador,
+    updateRolesUtilizador,
     deleteUtilizador
 }

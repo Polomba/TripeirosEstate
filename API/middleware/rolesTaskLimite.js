@@ -10,10 +10,10 @@ const utils = require('../utils/utils');
             const findUser = await userData.listUtilizadorById(user.user[0].Id);
 
             if (findUser[0].User_Roles === utils.user_roles.UR_Premium) {
-                // Se o usuário for premium, permitir o acesso sem limites
+                // Se o utilizador for premium, permitir o acesso sem limites
                 next();
             } else {
-                // Verificar o limite de criação de tarefas para usuários não premium
+                // Verificar o limite de criação de tarefas para utilizadores não premium
                 const currentWeekTasks = await tarefaData.countTasksCreatedByUserInCurrentWeek(findUser[0].Id);
 
                 if (currentWeekTasks < 5) {

@@ -124,20 +124,31 @@ const deleteTarefa = async (Id) => {
     }
 }
 
-const countTasksCreatedByUserInCurrentWeek = async (Id)=>{
+const countTasksCreatedByUserInCurrentWeek = async (userId) => {
+    try {
         const now = new Date();
-
         const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
-
         const endOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 6);
 
-        const tasks = await Task.find({
-            user: Id,
-            createdAt: { $gte: startOfWeek, $lte: endOfWeek }
-        });
+        let pool = await sql.connect(config.sql);
+        let query = `
+            SELECT COUNT(*) AS TaskCount 
+            FROM [dbo].[Task] 
+            WHERE [UserId] = @userId 
+            AND [Data] BETWEEN @startOfWeek AND @endOfWeek
+        `;
 
-        return tasks.length;
-    };
+        const result = await pool.request()
+            .input('userId', sql.Int, userId)
+            .input('startOfWeek', sql.Date, startOfWeek)
+            .input('endOfWeek', sql.Date, endOfWeek)
+            .query(query);
+
+        return result.recordset[0].TaskCount;
+    } catch (error) {
+        return error.message;
+    }
+};
 
 module.exports = {
     listTarefas,

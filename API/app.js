@@ -12,12 +12,11 @@ app.use(cookieParser());
 
 app.use('/api', require('./routes/authRoutes').routes);
 app.use('/api', require('./routes/commentTaskRoute').routes);
-//app.use('/api', require('./routes/pagamentoRoutes').routes);
+app.use('/api', require('./routes/pagamentoRoutes').routes);
 app.use('/api', require('./routes/reviewsTaskRoutes').routes);
 app.use('/api', require('./routes/tarefaRoutes').routes);
 app.use('/api', require('./routes/residentsRoutes').routes);
 app.use('/api', require('./routes/houseRoutes').routes);
 app.use('/api', require('./routes/userRoutes').routes);
-
 
 module.exports = app;

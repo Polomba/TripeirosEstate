@@ -1,7 +1,6 @@
 'use strict'
 const pagamentoData = require("../data/pagamentoService");
-const utilizadorData = require("../data/utilizadorService");
-const pedidoData = require("../data/pedidoService");
+const utilizadorData = require("../data/userService");
 const utils = require('../utils/utils');
 
 const pagamentoPedidosVerify  = async (req, res, next) => {

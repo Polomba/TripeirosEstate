@@ -6,10 +6,10 @@ const pagamentoPedidos = require("../middleware/pagamentoPedido")
 const router = express.Router();
 
 const {getPagamentos, getUserPagamentos, getPagamento, getPagamentosPremium, getPagamentoPremiumNaoPago, getTopPagamentoPremium,
-    addPagamentoPremium, updatePagamento } = pagamentoController;
+    addPagamentoPremium, updatePagamento} = pagamentoController;
 
 router.get('/Pagamentos',  getPagamentos);
-router.get('/UserPagamentos/:userId',  premiumTier.pagamentoPremiumVerify, pagamentoPedidos.pagamentoPedidosVerify, getUserPagamentos);
+router.get('/UserPagamentos/:userId',  premiumTier.pagamentoPremiumVerify, getUserPagamentos);
 router.get('/Pagamento/:Id',  getPagamento);
 router.get('/PagamentoPremiumNaoPago/:userId',  getPagamentoPremiumNaoPago);
 router.get('/PagamentosPremium', getPagamentosPremium);

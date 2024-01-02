@@ -100,6 +100,8 @@ const createUtilizador = async (userData) => {
 
 
 
+
+
 const deleteUtilizador = async (Id) => {
     try {
         let pool = await sql.connect(config.sql);
@@ -152,5 +154,4 @@ module.exports={
     updateRolesUtilizador,
     createUtilizador,
     deleteUtilizador,
-    updateUserToken
 }

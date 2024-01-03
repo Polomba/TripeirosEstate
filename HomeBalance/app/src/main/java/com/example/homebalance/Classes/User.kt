@@ -9,5 +9,5 @@ data class User (
     @SerializedName("Password") val password: String?,
     @SerializedName("Roles") val roles: String?,
     @SerializedName("Token") val token: String?,
-    @SerializedName("ProfilePicture") val ProfilePicture: String,
+    @SerializedName("ProfilePicture") val ProfilePicture: String?,
 )

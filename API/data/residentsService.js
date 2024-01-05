@@ -10,13 +10,30 @@ const getResidentsByHouseId = async (houseId) => {
     try {
         let pool = await sql.connect(config.sql);
         let query = `
-            SELECT DISTINCT u.Id as UserId, u.Name as UserName, r.Homeid
+            SELECT DISTINCT u.Id as UserId, u.Name, u.ProfilePicture, r.Homeid
             FROM Residents r
             INNER JOIN [User] u ON r.UserId = u.Id
             WHERE r.Homeid = @HouseId
         `;
         const result = await pool.request()
             .input('HouseId', sql.Int, houseId)
+            .query(query);
+        return result.recordset;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+const getHomeByUserId = async (userId) => {
+    try {
+        const pool = await sql.connect(config.sql);
+        const query = `
+            SELECT R.Homeid, H.Name, H.Adress as Adress
+            FROM Residents R
+            INNER JOIN Home H ON R.Homeid = H.id
+            WHERE R.UserId = @UserId
+        `;
+        const result = await pool.request()
+            .input('UserId', sql.Int, userId)
             .query(query);
         return result.recordset;
     } catch (error) {
@@ -47,5 +64,6 @@ const addResident = async (houseId, userId) => {
 
 module.exports = {
     getResidentsByHouseId,
-    addResident
+    addResident,
+    getHomeByUserId
 };

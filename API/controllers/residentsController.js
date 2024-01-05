@@ -13,6 +13,16 @@ const getResidentsByHouseId = async (req, res) => {
     }
 };
 
+const getHouseByUserId = async (req, res) => {
+    try {
+        const userId = req.params.UserId;
+        const residents = await residentsData.getHomeByUserId(userId);
+        res.json(residents);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+
 const addResident = async (req, res) => {
     try {
         const { houseId, userId } = req.body;
@@ -25,5 +35,6 @@ const addResident = async (req, res) => {
 
 module.exports = {
     getResidentsByHouseId,
-    addResident
+    addResident,
+    getHouseByUserId
 };

@@ -37,6 +37,8 @@ const listUtilizadorById = async (Id)=> {
     }
 }
 
+
+
 const listUtilizadorByEmail = async (Email)=> {
     try {
         let pool = await  sql.connect(config.sql);

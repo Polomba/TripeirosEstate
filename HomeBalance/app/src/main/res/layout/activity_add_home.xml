@@ -82,6 +82,7 @@
         android:layout_marginRight="17dp"
         android:text="@string/invite"
         android:textSize="17dp"
+        android:onClick="goInviteResident"
         android:backgroundTint="@color/logo_blue"
         />
 

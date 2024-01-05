@@ -35,4 +35,5 @@
     <string name="addhomes">Add Homes</string>
     <string name="nrResidences">Number of Homes:</string>
     <string name="nrConcludedTasks">Number of Concluded Tasks</string>
+    <string name="availablehouses">Available Houses:</string>
 </resources>

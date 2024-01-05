@@ -11,3 +11,4 @@ data class User (
     @SerializedName("Token") val token: String?,
     @SerializedName("ProfilePicture") val ProfilePicture: String?,
 )
+

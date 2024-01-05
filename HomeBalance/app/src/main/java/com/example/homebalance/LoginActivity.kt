@@ -60,11 +60,8 @@ class LoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
                 if (response.isSuccessful) {
                     val servicegetUser = retrofit.create(UserI::class.java)
-                    Log.d("Testeservice","teste")
                     val callgetUser = servicegetUser.getUserByEmail(email)
-                    Log.d("Testecall","teste")
                     getUserInfo(callgetUser)
-                    Log.d("Testegetuser","teste")
                 } else {
                 }
             }
@@ -81,22 +78,17 @@ class LoginActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     val userList: List<User>? = response.body()
                     if (userList != null && userList.isNotEmpty()) {
-                        val user: User = userList[0] // Obtém o primeiro usuário da lista
+                        val user: User = userList[0]
 
-                        Log.d("Teste", "Resposta bem-sucedida: $user")
 
-                        val userId = user.id ?: 0 // Acessa o campo id do usuário
-                        Log.d("Teste", "UserID: $userId")
+                        val userId = user.id ?: 0
 
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                         intent.putExtra("user_id", userId)
                         startActivity(intent)
                     } else {
-                        Log.e("Teste", "Lista de usuários vazia ou nula")
                     }
                 } else {
-                    Log.e("Teste", "Resposta não bem-sucedida: ${response.code()}")
-                    // Aqui você pode tratar a resposta não bem-sucedida, se necessário
                 }
             }
 

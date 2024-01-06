@@ -19,10 +19,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var listViewHouses: ListView
+    private val ADD_HOME_REQUEST = 1
+    private var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        userId = intent.extras?.getInt("user_id")
 
         listViewHouses = findViewById(R.id.lst_houses)
         val retrofit = Retrofit.Builder()
@@ -31,8 +34,6 @@ class HomeActivity : AppCompatActivity() {
             .build()
 
         val service = retrofit.create(ResidentI::class.java)
-
-        val userId = intent.extras?.getInt("user_id")
 
         val call = userId?.let { service.getHouseByUserId(it) }
 
@@ -68,6 +69,15 @@ class HomeActivity : AppCompatActivity() {
 
     fun createHome(v: View) {
         val intent = Intent(this, AddHomeActivity::class.java)
-        startActivity(intent)
+        intent.putExtra("user_id", userId)
+        startActivityForResult(intent, ADD_HOME_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ADD_HOME_REQUEST) {
+            if (resultCode == RESULT_OK) {
+            }
+        }
     }
 }

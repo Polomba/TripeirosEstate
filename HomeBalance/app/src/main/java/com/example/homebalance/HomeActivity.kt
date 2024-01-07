@@ -66,6 +66,15 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    fun openHome(v:View){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+    fun openProfile(v:View){
+        val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
 
     fun createHome(v: View) {
         val intent = Intent(this, AddHomeActivity::class.java)

@@ -54,6 +54,15 @@ class InsideHomeActivity : AppCompatActivity() {
         }
     }
 
+    fun openHome(v:View){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+    fun openProfile(v:View){
+        val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun getResidentsByHouseId(houseId: Int) {
         val call = residentService.getResidentsByHouseId(houseId)
         call.enqueue(object : Callback<List<User>> {

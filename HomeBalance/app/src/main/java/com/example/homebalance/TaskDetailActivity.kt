@@ -15,4 +15,13 @@ class TaskDetailActivity : AppCompatActivity() {
         val intent = Intent(this, ReviewActivity::class.java)
         startActivity(intent)
     }
+
+    fun openHome(v:View){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+    fun openProfile(v:View){
+        val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
+    }
 }

@@ -147,11 +147,11 @@
 
             <ImageView
                 android:id="@+id/imageHome"
-                android:onClick="openHome"
                 android:layout_width="22dp"
-                android:layout_height="30dp"
-                android:src="@drawable/icons8_home_96px_7"
-                android:layout_gravity="center"/>
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:onClick="openHome"
+                android:src="@drawable/icons8_home_96px_7" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,8 +170,9 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/icons8_person_96px"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:onClick="openProfile"
+                android:src="@drawable/icons8_person_96px" />
 
             <TextView
                 android:layout_width="wrap_content"

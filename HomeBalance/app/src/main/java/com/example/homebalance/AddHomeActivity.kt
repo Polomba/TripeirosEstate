@@ -1,5 +1,6 @@
 package com.example.homebalance
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -27,6 +28,15 @@ class AddHomeActivity : AppCompatActivity() {
 
         homenameEditText = findViewById(R.id.et_housename)
         homeaddressEditText = findViewById(R.id.et_houseadress)
+    }
+
+    fun openHome(v:View){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+    fun openProfile(v:View){
+        val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
     }
 
     fun AddHouse(v: View) {

@@ -23,6 +23,15 @@ class AddResidentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_resident)
     }
 
+    fun openHome(v:View){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+    }
+    fun openProfile(v:View){
+        val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
     fun doAddResident(v: View){
         val emailEditText : EditText = findViewById<EditText>(R.id.emailet)
 

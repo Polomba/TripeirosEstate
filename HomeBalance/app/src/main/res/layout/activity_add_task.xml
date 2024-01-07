@@ -280,6 +280,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/icons8_person_96px"
+                android:onClick="openProfile"
                 android:layout_gravity="center"/>
 
             <TextView

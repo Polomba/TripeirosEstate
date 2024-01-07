@@ -1,6 +1,7 @@
 package com.example.homebalance.Interfaces
 
 import com.example.homebalance.Classes.Home
+import com.example.homebalance.Classes.HomeResponse
 import com.example.homebalance.Classes.User
 import retrofit2.Call
 import retrofit2.http.Body
@@ -12,8 +13,7 @@ interface HomeI {
     @POST("House")
     fun createHouse(
         @Body homeData : Home
-    ): Call<Any>
+    ): Call<List<HomeResponse>>
 
-    @GET("House/{houseName}")
-    fun getHouseId(@Path("houseName") name: String): Call<Int>
+
 }

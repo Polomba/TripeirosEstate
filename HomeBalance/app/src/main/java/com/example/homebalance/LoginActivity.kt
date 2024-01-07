@@ -79,8 +79,6 @@ class LoginActivity : AppCompatActivity() {
                     val userList: List<User>? = response.body()
                     if (userList != null && userList.isNotEmpty()) {
                         val user: User = userList[0]
-
-
                         val userId = user.id ?: 0
 
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)

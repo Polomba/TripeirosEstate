@@ -36,12 +36,12 @@ class AddResidentActivity : AppCompatActivity() {
 
         val servicegetUser = retrofit.create(UserI::class.java)
         val callgetUser = servicegetUser.getUserByEmail(email)
-        val userId = getUserInfo(callgetUser)
-        Log.d("Teste","$userId")
+
+        callgetUser.enqueue(object : Callback<>)
     }
 
     fun getUserInfo(call: Call<List<User>>) {
-        call.enqueue(object : Callback<List<User>> {
+        call.enqueue(object : Callback<List<User>>{
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if(response.isSuccessful){
                     val userList: List<User>? = response.body()
@@ -56,7 +56,10 @@ class AddResidentActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                Log.e("Teste", "Falha na requisição: ${t.message}")
+                // Trate a falha na requisição, se necessário
             }
         })
     }
+
 }

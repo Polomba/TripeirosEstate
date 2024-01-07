@@ -32,8 +32,6 @@ class HorizontalListViewAdapter : RecyclerView.Adapter<HorizontalListViewAdapter
 
     class ResidentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(resident: User) {
-
-
             itemView.findViewById<TextView>(R.id.tv_adapter).text = resident.name
         }
     }

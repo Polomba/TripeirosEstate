@@ -1,6 +1,7 @@
 package com.example.homebalance.Interfaces
 
 import com.example.homebalance.Classes.Home
+import com.example.homebalance.Classes.HomeResponse
 import com.example.homebalance.Classes.Residents
 import com.example.homebalance.Classes.User
 import retrofit2.Call
@@ -19,5 +20,5 @@ interface ResidentI {
     @POST("Resident")
     fun addResident(
         @Body residentData : Residents
-    ): Call<Any>
+    ): Call<HomeResponse>
 }

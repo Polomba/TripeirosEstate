@@ -21,9 +21,9 @@ const listTarefas = async () => {
 const listTarefaById = async (Id)=> {
     try {
         let pool = await  sql.connect(config.sql);
-        let query = 'SELECT [Id],[Tittle],[Description],[Data],[State],[Photo]' +
+        let query = 'SELECT [Id],[Tittle],[Description],[Data],[State],[Photo],[homeid]'+
             'FROM [dbo].[Task]' +
-            'WHERE [Id] = @Id';
+            'WHERE [homeid] = @Id';
 
         const oneConteudo = await pool.request()
             .input('Id', sql.Int, Id)

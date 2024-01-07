@@ -50,13 +50,15 @@
     <ListView
         android:id="@+id/lst_houses"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_availablehouses"
+        android:layout_height="0dp"
         android:clickable="true"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        app:layout_constraintBottom_toTopOf="@+id/Bottom_Layout"
+        app:layout_constraintTop_toBottomOf="@+id/tv_availablehouses" />
 
     <LinearLayout
+        android:id="@+id/Bottom_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

@@ -7,6 +7,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.homebalance.Classes.GlobalVariables
 import com.example.homebalance.Classes.Home
+import com.example.homebalance.Classes.HomeResponse
 import com.example.homebalance.Classes.Residents
 import com.example.homebalance.Interfaces.HomeI
 import com.example.homebalance.Interfaces.ResidentI
@@ -41,71 +42,50 @@ class AddHomeActivity : AppCompatActivity() {
         val service = retrofit.create(HomeI::class.java)
         val call = service.createHouse(home)
 
-        call.enqueue(object : Callback<Any> {
-            override fun onResponse(call: Call<Any>, response: Response<Any>) {
+        call.enqueue(object : Callback<List<HomeResponse>> {
+            override fun onResponse(call: Call<List<HomeResponse>>, response: Response<List<HomeResponse>>) {
                 if (response.isSuccessful) {
-
+                    val homes = response.body()
+                    if (!homes.isNullOrEmpty()) {
+                        val firstHomeId = homes[0].id
+                        val userId = intent.extras?.getInt("user_id")
+                        AddResidentToHouse(firstHomeId, userId)
+                    } else {
+                        Log.d("Home", "Lista de casas vazia")
+                    }
                 } else {
                     Log.d("Home", "Resposta não bem-sucedida: ${response.code()}")
                 }
             }
 
-            override fun onFailure(call: Call<Any>, t: Throwable) {
-                getHouseIdByName(homename)
+            override fun onFailure(call: Call<List<HomeResponse>>, t: Throwable) {
+                Log.e("Home", "Falha na requisição: ${t.message}")
             }
         })
+
     }
 
-    fun AddResidentToHouse(homeId: Int, userId: Int?) {
+    fun AddResidentToHouse(homeId: Int?, userId: Int?) {
         val retrofit = Retrofit.Builder()
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-        val residentData = Residents(homeId, userId)
+        Log.d("Resident","$homeId")
+        val residentData = Residents(homeId,userId)
 
         val service = retrofit.create(ResidentI::class.java)
         val call = service.addResident(residentData)
 
-        call.enqueue(object : Callback<Any> {
-            override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                if (response.isSuccessful) {
-                    setResult(RESULT_OK)
-                    finish()
-                } else {
-                    Log.d("Resident", "Resposta não bem-sucedida: ${response.code()}")
-                }
+        call.enqueue(object : Callback<HomeResponse> {
+            override fun onResponse(call: Call<HomeResponse>, response: Response<HomeResponse>) {
             }
 
-            override fun onFailure(call: Call<Any>, t: Throwable) {
-                Log.d("Resident", "Erro na chamada: ${t.message}")
+            override fun onFailure(call: Call<HomeResponse>, t: Throwable) {
+                setResult(RESULT_OK)
+                finish()
             }
         })
     }
 
-    fun getHouseIdByName(housename: String) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(GlobalVariables.HOMEBALANCE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        val service = retrofit.create(HomeI::class.java)
-        val call = service.getHouseId(housename)
-
-        call.enqueue(object : Callback<Int> {
-            override fun onResponse(call: Call<Int>, response: Response<Int>) {
-                if (response.isSuccessful) {
-                    val homeId = response.body()
-                    homeId?.let {
-                        val userId = intent.extras?.getInt("user_id")
-                        AddResidentToHouse(it, userId)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<Int>, t: Throwable) {
-                Log.d("Home", "Erro ao obter ID da casa: ${t.message}")
-            }
-        })
-    }
 }

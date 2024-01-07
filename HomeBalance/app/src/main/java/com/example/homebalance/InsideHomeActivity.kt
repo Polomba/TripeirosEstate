@@ -87,7 +87,6 @@ class InsideHomeActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-                // Handle failure
             }
         })
     }

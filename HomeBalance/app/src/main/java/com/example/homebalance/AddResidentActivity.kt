@@ -37,7 +37,6 @@ class AddResidentActivity : AppCompatActivity() {
         val servicegetUser = retrofit.create(UserI::class.java)
         val callgetUser = servicegetUser.getUserByEmail(email)
 
-        callgetUser.enqueue(object : Callback<>)
     }
 
     fun getUserInfo(call: Call<List<User>>) {

@@ -22,6 +22,7 @@ const createHouse = async (houseData) => {
         let pool = await sql.connect(config.sql);
         let query = `
             INSERT INTO Home (Name, Adress)
+            OUTPUT INSERTED.id
             VALUES (@Name, @Adress)
         `;
 

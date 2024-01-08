@@ -10,7 +10,16 @@ const paymentState = {
     PS_NotPay: 'NaoPago'
 }
 
+const taskState = {
+    TS_Active: 'Ativa',
+    TS_Concluded: 'Concluída',
+    TS_InProgress: 'Em Progresso'
+
+
+}
+
 module.exports = {
     user_roles,
     paymentState,
+    taskState
 }

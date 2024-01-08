@@ -1,5 +1,6 @@
 package com.example.homebalance.Interfaces
 import com.example.homebalance.Classes.Auth
+import com.example.homebalance.Classes.TokenResponse
 import com.example.homebalance.Classes.User
 import retrofit2.Call
 import retrofit2.http.Body
@@ -9,7 +10,7 @@ interface AuthI {
     @POST("authLogin")
     fun authLogin(
         @Body userData: User
-    ): Call<Any>
+    ): Call<TokenResponse>
 
     @POST("authRegister")
     fun authRegister(

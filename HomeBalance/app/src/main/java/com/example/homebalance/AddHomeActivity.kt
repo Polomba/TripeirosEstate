@@ -43,21 +43,21 @@ class AddHomeActivity : AppCompatActivity() {
     fun AddHouse(v: View) {
         val homename = homenameEditText.text.toString()
         val homeaddress = homeaddressEditText.text.toString()
+        val userId = intent.extras?.getInt("user_id")
 
         val retrofit = Retrofit.Builder()
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val home = Home(null, homename, homeaddress)
+        val home = Home(null, homename, homeaddress, userId)
+        val sp = GlobalVariables.getSharedPreferencesContext(this@AddHomeActivity)
+        val token = sp.getString("authToken", null)
         val service = retrofit.create(HomeI::class.java)
-        val call = service.createHouse(home)
+        val call = service.createHouse(token ,home)
 
         call.enqueue(object : Callback<List<HomeResponse>> {
-            override fun onResponse(
-                call: Call<List<HomeResponse>>,
-                response: Response<List<HomeResponse>>
-            ) {
+            override fun onResponse(call: Call<List<HomeResponse>>, response: Response<List<HomeResponse>>) {
                 if (response.isSuccessful) {
                     val homes = response.body()
                     if (!homes.isNullOrEmpty()) {

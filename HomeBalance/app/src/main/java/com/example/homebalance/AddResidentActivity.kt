@@ -59,7 +59,6 @@ class AddResidentActivity : AppCompatActivity() {
         val emailEditText: EditText = findViewById<EditText>(R.id.emailet)
         val houseId = intent.extras?.getInt("house_id")
         val email = emailEditText.text.toString()
-        Log.d("getUserInfo", "Email: $email, House ID: $houseId")
         val retrofit = Retrofit.Builder()
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -71,16 +70,10 @@ class AddResidentActivity : AppCompatActivity() {
         callgetUser.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful) {
-                    Log.d("getUserInfo", "Response is successful")
-
                     val userList: List<User>? = response.body()
                     if (userList != null && userList.isNotEmpty()) {
-                        Log.d("getUserInfo", "User list is not empty")
-
                         val user: User = userList[0]
                         val userId = user.id ?: 0
-                        Log.d("getUserInfo", "User ID: $userId")
-
                         AddResidentToHouse(houseId, userId)
                     } else {
                         Log.d("getUserInfo", "User list is empty")

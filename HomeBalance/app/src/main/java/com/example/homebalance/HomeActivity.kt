@@ -30,6 +30,8 @@ class HomeActivity : AppCompatActivity() {
 
         listViewHouses = findViewById(R.id.lst_houses)
         setupHouseList()
+
+
     }
 
     private fun setupHouseList() {
@@ -39,7 +41,7 @@ class HomeActivity : AppCompatActivity() {
             .build()
 
         val service = retrofit.create(ResidentI::class.java)
-
+        Log.d("UserId","$userId")
         val call = userId?.let { service.getHouseByUserId(it) }
 
         call?.enqueue(object : Callback<List<Home>> {
@@ -53,7 +55,8 @@ class HomeActivity : AppCompatActivity() {
                         listViewHouses.setOnItemClickListener { _, _, position, _ ->
                             val selectedHome: Home = homes[position]
                             val intent = Intent(this@HomeActivity, InsideHomeActivity::class.java)
-                            intent.putExtra("home_id", selectedHome.id)
+                            val homeid = selectedHome.id.toString()
+                            intent.putExtra("home_id", homeid)
                             intent.putExtra("user_id", userId)
                             startActivity(intent)
                         }

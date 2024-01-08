@@ -29,7 +29,7 @@ class HouseDisplayAdapter(context: Context, homes: List<Home>) :
 
         currentHome?.let {
             houseNameTextView.text = it.name
-            addressTextView.text = it.adress
+            addressTextView.text = it.address
         }
 
 

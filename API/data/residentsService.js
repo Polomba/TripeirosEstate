@@ -27,7 +27,7 @@ const getHomeByUserId = async (userId) => {
     try {
         const pool = await sql.connect(config.sql);
         const query = `
-            SELECT R.Homeid, H.Name, H.Adress as Adress
+            SELECT R.Homeid, H.Name, H.Address as Address
             FROM Residents R
             INNER JOIN Home H ON R.Homeid = H.id
             WHERE R.UserId = @UserId

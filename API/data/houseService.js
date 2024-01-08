@@ -21,14 +21,15 @@ const createHouse = async (houseData) => {
     try {
         let pool = await sql.connect(config.sql);
         let query = `
-            INSERT INTO Home (Name, Adress)
+            INSERT INTO Home (Name, Address, UserId)
             OUTPUT INSERTED.id
-            VALUES (@Name, @Adress)
+            VALUES (@Name, @Address, @UserId)
         `;
 
         const result = await pool.request()
             .input('Name', sql.VarChar(255), houseData.Name)
-            .input('Adress', sql.VarChar(255), houseData.Adress)
+            .input('Address', sql.VarChar(255), houseData.Address)
+            .input('UserId', sql.Int, houseData.UserId)
             .query(query);
 
         return result.recordset;

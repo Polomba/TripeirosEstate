@@ -26,6 +26,8 @@ import retrofit2.create
 class InsideHomeActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HorizontalListViewAdapter
+    private val ADD_RESIDENT_REQUEST = 2
+    private var userId: Int? = null
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(HOMEBALANCE_URL)
@@ -43,22 +45,23 @@ class InsideHomeActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.horizontalscroll)
         adapter = HorizontalListViewAdapter()
 
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = adapter
-
-
+        userId = intent.extras?.getInt("user_id")
         val houseId = intent.extras?.getInt("home_id")
         if (houseId != null) {
             getResidentsByHouseId(houseId)
-            getTasksByHouseId(houseId)
         }
     }
 
-    fun openHome(v:View){
+    fun openHome(v: View) {
         val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra("user_id", userId)
         startActivity(intent)
     }
-    fun openProfile(v:View){
+
+    fun openProfile(v: View) {
         val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
     }
@@ -81,36 +84,29 @@ class InsideHomeActivity : AppCompatActivity() {
         })
     }
 
-    private fun getTasksByHouseId(homeid: Int) {
-        val call = taskservice.listTarefaById(homeid)
-        call.enqueue(object : Callback<List<Task>> {
-            override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
-                if (response.isSuccessful) {
-                    val taskList = response.body()
-                    taskList?.let {
-                        val gridView: GridView = findViewById(R.id.gridView)
-                        val taskAdapter = TaskAdapter(this@InsideHomeActivity, it,)
-                        gridView.adapter = taskAdapter
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-            }
-        })
-    }
 
 
-
-
-    fun CreateTask(V: View) {
+    fun CreateTask(v: View) {
         val intent = Intent(this@InsideHomeActivity, AddTaskActivity::class.java)
         startActivity(intent)
     }
 
-    fun goInviteResident(v: View){
+    fun goInviteResident(v: View) {
+        val houseId = intent.extras?.getInt("home_id")
         val intent = Intent(this@InsideHomeActivity, AddResidentActivity::class.java)
-        startActivity(intent)
+        intent.putExtra("house_id", houseId)
+        Log.d("HouseId", "$houseId")
+        startActivityForResult(intent, ADD_RESIDENT_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ADD_RESIDENT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                val houseId = intent.extras?.getInt("home_id")
+                houseId?.let { getResidentsByHouseId(it) }
+            }
+        }
     }
 
 }

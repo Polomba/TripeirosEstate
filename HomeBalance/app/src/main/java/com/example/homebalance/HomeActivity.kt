@@ -25,9 +25,14 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
         userId = intent.extras?.getInt("user_id")
 
         listViewHouses = findViewById(R.id.lst_houses)
+        setupHouseList()
+    }
+
+    private fun setupHouseList() {
         val retrofit = Retrofit.Builder()
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -49,6 +54,7 @@ class HomeActivity : AppCompatActivity() {
                             val selectedHome: Home = homes[position]
                             val intent = Intent(this@HomeActivity, InsideHomeActivity::class.java)
                             intent.putExtra("home_id", selectedHome.id)
+                            intent.putExtra("user_id", userId)
                             startActivity(intent)
                         }
                     }
@@ -57,24 +63,11 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
 
-
             override fun onFailure(call: Call<List<Home>>, t: Throwable) {
                 Log.e("HomeActivity", "Erro: ${t.message}")
             }
-
         })
-
     }
-
-    fun openHome(v:View){
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
-    }
-    fun openProfile(v:View){
-        val intent = Intent(this, ProfileActivity::class.java)
-        startActivity(intent)
-    }
-
 
     fun createHome(v: View) {
         val intent = Intent(this, AddHomeActivity::class.java)
@@ -86,7 +79,10 @@ class HomeActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_HOME_REQUEST) {
             if (resultCode == RESULT_OK) {
+                setupHouseList()
             }
         }
     }
+
+
 }

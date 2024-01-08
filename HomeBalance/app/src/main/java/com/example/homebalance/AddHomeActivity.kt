@@ -30,11 +30,12 @@ class AddHomeActivity : AppCompatActivity() {
         homeaddressEditText = findViewById(R.id.et_houseadress)
     }
 
-    fun openHome(v:View){
+    fun openHome(v: View) {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
-    fun openProfile(v:View){
+
+    fun openProfile(v: View) {
         val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
     }
@@ -53,7 +54,10 @@ class AddHomeActivity : AppCompatActivity() {
         val call = service.createHouse(home)
 
         call.enqueue(object : Callback<List<HomeResponse>> {
-            override fun onResponse(call: Call<List<HomeResponse>>, response: Response<List<HomeResponse>>) {
+            override fun onResponse(
+                call: Call<List<HomeResponse>>,
+                response: Response<List<HomeResponse>>
+            ) {
                 if (response.isSuccessful) {
                     val homes = response.body()
                     if (!homes.isNullOrEmpty()) {
@@ -75,19 +79,19 @@ class AddHomeActivity : AppCompatActivity() {
 
     }
 
-    fun AddResidentToHouse(homeId: Int?, userId: Int?) {
+    fun AddResidentToHouse(houseId: Int?, userId: Int?) {
         val retrofit = Retrofit.Builder()
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        Log.d("Resident","$homeId")
-        val residentData = Residents(homeId,userId)
+        val residentData = Residents(houseId, userId)
 
         val service = retrofit.create(ResidentI::class.java)
         val call = service.addResident(residentData)
 
         call.enqueue(object : Callback<HomeResponse> {
             override fun onResponse(call: Call<HomeResponse>, response: Response<HomeResponse>) {
+
             }
 
             override fun onFailure(call: Call<HomeResponse>, t: Throwable) {
@@ -96,6 +100,5 @@ class AddHomeActivity : AppCompatActivity() {
             }
         })
     }
-
 
 }

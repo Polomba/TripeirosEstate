@@ -1,41 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    android:layout_height="match_parent">
 
 
     <ImageView
         android:id="@+id/iv_housepic"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        tools:ignore="MissingConstraints"
-        android:src="@drawable/icons8_person_96px"/>
+        android:src="@drawable/icons8_person_96px"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/tv_housename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        app:layout_constraintStart_toEndOf="@+id/iv_housepic"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        tools:ignore="MissingConstraints"
-        />
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_housepic"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/iv_housepic"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="13dp"
-        tools:ignore="MissingConstraints"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_housepic"
         app:layout_constraintTop_toBottomOf="@id/tv_housename"
-        />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/nrofresidentes"

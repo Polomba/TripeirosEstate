@@ -12,114 +12,106 @@
         android:id="@+id/tv_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:text="@string/login"
         android:gravity="center"
-        android:textSize="30sp"
         android:paddingTop="100dp"
+        android:text="@string/login"
         android:textColor="@color/black"
-        />
+        android:textSize="30sp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/mylogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_login"
-        tools:ignore="MissingConstraints"
+        android:gravity="center"
         android:text="@string/mylogin"
         android:textColor="@color/logo_blue"
-        android:gravity="center"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_login"
+        tools:ignore="MissingConstraints" />
 
 
     <EditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@id/mylogin"
-        android:layout_marginTop="150dp"
         android:layout_marginLeft="17dp"
+        android:layout_marginTop="150dp"
         android:layout_marginRight="17dp"
         android:backgroundTint="@color/logo_blue"
         android:hint="@string/email"
         android:textColorHint="@color/logo_blue"
-        />
+        app:layout_constraintTop_toBottomOf="@id/mylogin"
+        tools:ignore="MissingConstraints" />
+
     <EditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@id/et_email"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="17dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="17dp"
         android:backgroundTint="@color/logo_blue"
         android:hint="@string/password"
-        android:textColorHint="@color/logo_blue"
         android:inputType="textPassword"
-        />
+        android:textColorHint="@color/logo_blue"
+        app:layout_constraintTop_toBottomOf="@id/et_email"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/et_password"
-        tools:ignore="MissingConstraints"
-        android:text="@string/login"
-        android:padding="13dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:backgroundTint="@color/logo_blue"
-        android:textSize="17sp"
         android:onClick="doLoginLP"
-        />
+        android:padding="13dp"
+        android:text="@string/login"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@id/et_password"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/fgtPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
         android:gravity="center"
         android:text="@string/fgpass"
         android:textSize="13sp"
-        />
+        app:layout_constraintTop_toBottomOf="@id/btn_login"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="360dp"
         android:onClick="goBack"
         android:src="@drawable/icons8_back_50px_1"
-        android:layout_marginRight="360dp"
-        tools:ignore="MissingConstraints"
-        />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/tv_by"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fgtPass"
         android:layout_marginTop="70dp"
         android:text="@string/by"
         android:textAlignment="center"
-        tools:ignore="MissingConstraints"
+        android:textColor="@color/black"
         android:textSize="15sp"
-        android:textColor="@color/black"/>
+        app:layout_constraintTop_toBottomOf="@id/fgtPass"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_by"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints"
-        android:src="@drawable/pngpretologo"
         android:layout_marginLeft="110dp"
         android:layout_marginRight="110dp"
         android:layout_marginBottom="30dp"
-        />
-
-
-
-
-
+        android:src="@drawable/pngpretologo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_by"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

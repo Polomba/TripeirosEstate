@@ -3,6 +3,6 @@ package com.example.homebalance.Classes
 import com.google.gson.annotations.SerializedName
 
 data class Residents (
-    @SerializedName("HouseId") val homeid: Int?,
-    @SerializedName("UserId") val userid: Int?,
+    @SerializedName("houseId") val houseid: Int?,
+    @SerializedName("userId") val userid: Int?,
 )

@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
     }
 
-    fun goBack(v:View) {
+    fun goBack(v: View) {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
@@ -67,15 +67,19 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<Any>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "Erro na requisição: " + t.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Erro na requisição: " + t.message,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
 
     fun getUserInfo(call: Call<List<User>>) {
-        call.enqueue(object : Callback<List<User>>{
+        call.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     val userList: List<User>? = response.body()
                     if (userList != null && userList.isNotEmpty()) {
                         val user: User = userList[0]

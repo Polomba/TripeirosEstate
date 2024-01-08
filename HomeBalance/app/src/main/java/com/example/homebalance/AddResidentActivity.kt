@@ -8,8 +8,11 @@ import android.view.View
 import android.widget.EditText
 import com.example.homebalance.Classes.GlobalVariables
 import com.example.homebalance.Classes.Home
+import com.example.homebalance.Classes.HomeResponse
+import com.example.homebalance.Classes.Residents
 import com.example.homebalance.Classes.User
 import com.example.homebalance.Interfaces.HomeI
+import com.example.homebalance.Interfaces.ResidentI
 import com.example.homebalance.Interfaces.UserI
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,26 +21,45 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class AddResidentActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_resident)
     }
 
-    fun openHome(v:View){
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
-    }
-    fun openProfile(v:View){
-        val intent = Intent(this, ProfileActivity::class.java)
-        startActivity(intent)
+    fun doAddResident(v: View) {
+        getUserInfo()
     }
 
-    fun doAddResident(v: View){
-        val emailEditText : EditText = findViewById<EditText>(R.id.emailet)
+    fun AddResidentToHouse(houseId: Int?, userId: Int?) {
+        Log.d("AddResidentToHouse", "House ID: $houseId, User ID: $userId")
 
+        val retrofit = Retrofit.Builder()
+            .baseUrl(GlobalVariables.HOMEBALANCE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val residentData = Residents(houseId, userId)
+
+        val service = retrofit.create(ResidentI::class.java)
+        val call = service.addResident(residentData)
+
+        call.enqueue(object : Callback<HomeResponse> {
+            override fun onResponse(call: Call<HomeResponse>, response: Response<HomeResponse>) {
+
+            }
+
+            override fun onFailure(call: Call<HomeResponse>, t: Throwable) {
+                setResult(RESULT_OK)
+                finish()
+            }
+        })
+    }
+
+    fun getUserInfo() {
+        val emailEditText: EditText = findViewById<EditText>(R.id.emailet)
+        val houseId = intent.extras?.getInt("house_id")
         val email = emailEditText.text.toString()
-
-
+        Log.d("getUserInfo", "Email: $email, House ID: $houseId")
         val retrofit = Retrofit.Builder()
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -46,28 +68,33 @@ class AddResidentActivity : AppCompatActivity() {
         val servicegetUser = retrofit.create(UserI::class.java)
         val callgetUser = servicegetUser.getUserByEmail(email)
 
-    }
-
-    fun getUserInfo(call: Call<List<User>>) {
-        call.enqueue(object : Callback<List<User>>{
+        callgetUser.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
+                    Log.d("getUserInfo", "Response is successful")
+
                     val userList: List<User>? = response.body()
                     if (userList != null && userList.isNotEmpty()) {
+                        Log.d("getUserInfo", "User list is not empty")
+
                         val user: User = userList[0]
                         val userId = user.id ?: 0
+                        Log.d("getUserInfo", "User ID: $userId")
 
+                        AddResidentToHouse(houseId, userId)
                     } else {
+                        Log.d("getUserInfo", "User list is empty")
                     }
                 } else {
+                    Log.d("getUserInfo", "Response is not successful")
                 }
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 Log.e("Teste", "Falha na requisição: ${t.message}")
-                // Trate a falha na requisição, se necessário
             }
         })
+
     }
 
 }

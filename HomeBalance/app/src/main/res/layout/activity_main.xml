@@ -3,80 +3,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/Beige"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/Beige">
 
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="350dp"
-        android:src="@drawable/logo_vertical"
         android:scaleType="centerCrop"
+        android:src="@drawable/logo_vertical"
 
         />
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        app:layout_constraintTop_toBottomOf="@id/iv_logo"
-        android:onClick="doLogin"
-        android:textSize="15sp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/logo_blue"
-        tools:ignore="MissingConstraints"
-        android:layout_marginRight="17dp"
         android:layout_marginLeft="17dp"
-        />
+        android:layout_marginRight="17dp"
+        android:backgroundTint="@color/logo_blue"
+        android:onClick="doLogin"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"
-        tools:ignore="MissingConstraints"
-        android:text=""
-        android:padding="13dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:backgroundTint="@color/logo_blue"
-        />
+        android:padding="13dp"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/createAccountButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create_account"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"
-        android:onClick="doRegister"
-        android:textSize="15sp"
-        tools:ignore="MissingConstraints"
+        android:layout_marginLeft="17dp"
         android:layout_marginTop="2dp"
         android:layout_marginRight="17dp"
-        android:layout_marginLeft="17dp"
         android:backgroundTint="@color/Beige"
-        />
+        android:onClick="doRegister"
+        android:text="@string/create_account"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/tv_by"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/createAccountButton"
         android:layout_marginTop="70dp"
         android:text="@string/by"
         android:textAlignment="center"
-        tools:ignore="MissingConstraints"
+        android:textColor="@color/black"
         android:textSize="15sp"
-        android:textColor="@color/black"/>
+        app:layout_constraintTop_toBottomOf="@id/createAccountButton"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_by"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints"
-        android:src="@drawable/pngpretologo"
         android:layout_marginLeft="110dp"
         android:layout_marginRight="110dp"
         android:layout_marginBottom="30dp"
-        />
+        android:src="@drawable/pngpretologo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_by"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

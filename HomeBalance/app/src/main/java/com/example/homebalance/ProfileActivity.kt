@@ -58,7 +58,6 @@ class ProfileActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
             }
         })

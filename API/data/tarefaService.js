@@ -7,7 +7,7 @@ const utils = require('../utils/utils');
 const listTarefas = async () => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'SELECT [Id],[Tittle],[Description],[Data],[State],[Photo]' +
+        let query = 'SELECT [Id],[Title],[Description],[Data],[State],[Photo]' +
             'FROM [dbo].[Task]';
         const list = await pool.request()
             .query(query);
@@ -21,7 +21,7 @@ const listTarefas = async () => {
 const listTarefaById = async (Id)=> {
     try {
         let pool = await  sql.connect(config.sql);
-        let query = 'SELECT [Id],[Tittle],[Description],[Data],[State],[Photo],[homeid]'+
+        let query = 'SELECT [Id],[Title],[Description],[Data],[State],[Photo],[homeid]'+
             'FROM [dbo].[Task]' +
             'WHERE [homeid] = @Id';
 
@@ -36,15 +36,15 @@ const listTarefaById = async (Id)=> {
     }
 }
 
-const listTarefaByTittle = async (Tittle)=> {
+const listTarefaByTitle = async (Title)=> {
     try {
         let pool = await  sql.connect(config.sql);
-        let query = 'SELECT [Id],[Tittle],[Description],[Data]' +
+        let query = 'SELECT [Id],[Title],[Description],[Data]' +
             'FROM [dbo].[Task]' +
-            'WHERE [Tittle] = @Tittle';
+            'WHERE [Title] = @Title';
 
         const oneTarefa = await pool.request()
-            .input('Tittle', sql.VarChar(255), Tittle)
+            .input('Title', sql.VarChar(255), Title)
             .query(query);
 
         return oneTarefa.recordset;
@@ -58,13 +58,13 @@ const createTarefa = async (tarefaData) => {
     try {
         let pool = await sql.connect(config.sql);
         let query = `INSERT INTO [dbo].[Task] 
-            ([Tittle], [Description], [Data], [State], [Photo], [Homeid], [UserId]) 
-            VALUES (@Tittle, @Description, @Data, @State, @Photo, @Homeid, @UserId);
+            ([Title], [Description], [Data], [State], [Photo], [Homeid], [UserId]) 
+            VALUES (@Title, @Description, @Data, @State, @Photo, @Homeid, @UserId);
             SELECT SCOPE_IDENTITY() AS Id;
         `;
 
         const insertConteudo = await pool.request()
-            .input('Tittle', sql.VarChar(255), tarefaData.Tittle)
+            .input('Title', sql.VarChar(255), tarefaData.Title)
             .input('Description', sql.VarChar(255), tarefaData.Description)
             .input('Data', sql.Date, tarefaData.Data)
             .input('State', sql.VarChar(255), tarefaData.State)
@@ -84,7 +84,7 @@ const updateTarefa = async (Id, tarefaData) => {
     try {
         let pool = await sql.connect(config.sql);
         let query = 'UPDATE [dbo].[Task] SET ';
-        const inputParams = ['Tittle', 'Description', 'Data', 'State', 'Photo', 'Homeid', 'UserId']; // Adicione os campos faltantes aqui
+        const inputParams = ['Title', 'Description', 'Data', 'State', 'Photo', 'Homeid', 'UserId']; // Adicione os campos faltantes aqui
         for (const param of inputParams) {
             query += tarefaData[param] ? `${param} = @${param}, ` : '';
         }
@@ -93,7 +93,7 @@ const updateTarefa = async (Id, tarefaData) => {
 
         const update = await pool.request()
             .input('Id', sql.Int, Id)
-            .input('Tittle', sql.VarChar(255), tarefaData.Tittle)
+            .input('Title', sql.VarChar(255), tarefaData.Title)
             .input('Description', sql.VarChar(255), tarefaData.Description)
             .input('Data', sql.DateTime, tarefaData.Data)
             .input('State', sql.VarChar(255), tarefaData.State)
@@ -153,7 +153,7 @@ const countTasksCreatedByUserInCurrentWeek = async (userId) => {
 module.exports = {
     listTarefas,
     listTarefaById,
-    listTarefaByTittle,
+    listTarefaByTitle,
     createTarefa,
     updateTarefa,
     deleteTarefa,

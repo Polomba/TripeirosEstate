@@ -23,6 +23,10 @@ class ProfileActivity : AppCompatActivity() {
         .baseUrl(GlobalVariables.HOMEBALANCE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_profile)
+    }
 
     val userEmail: EditText = findViewById(R.id.tv_profileEmail)
     val numberOfHouses: EditText = findViewById(R.id.et_profilenrresidencias)
@@ -31,10 +35,7 @@ class ProfileActivity : AppCompatActivity() {
     private val profileService = retrofit.create(UserI::class.java)
     private val residentService = retrofit.create(ResidentI::class.java)
     private val taskservice = retrofit.create(TaskI::class.java)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
-    }
+
 
     fun openHome(v: View) {
         val intent = Intent(this, HomeActivity::class.java)

@@ -7,7 +7,7 @@ const listUtilizadores = async () => {
     try {
         let pool = await sql.connect(config.sql);
         let query =  'SELECT [Id],[Name],[Email]' +
-            '[ProfilePicture],[Roles],[Token]' +
+            ',[ProfilePicture],[Roles],[Token]' +
             'FROM [dbo].[User]';
         const list = await pool.request()
             .query(query);

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.GridView
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +27,10 @@ import retrofit2.create
 class InsideHomeActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HorizontalListViewAdapter
+    private lateinit var taskListView : ListView
     private val ADD_RESIDENT_REQUEST = 2
     private var userId: Int? = null
+    lateinit var taskList : List<Task>
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(HOMEBALANCE_URL)
@@ -35,7 +38,8 @@ class InsideHomeActivity : AppCompatActivity() {
         .build()
 
     private val residentService = retrofit.create(ResidentI::class.java)
-    private val taskservice = retrofit.create(TaskI::class.java)
+    private val tarefaService = retrofit.create(TaskI::class.java)
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,14 +49,39 @@ class InsideHomeActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.horizontalscroll)
         adapter = HorizontalListViewAdapter()
 
-        recyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = adapter
-        userId = intent.extras?.getInt("user_id")
         val houseId = intent.extras?.getInt("home_id")
         if (houseId != null) {
             getResidentsByHouseId(houseId)
+            val call = houseId.let { tarefaService.listTarefaById(it) }
+
+            call?.enqueue(object : Callback<List<Task>> {
+                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    if (response.isSuccessful) {
+                        val tasks = response.body()
+                        tasks?.let {
+                            taskList = it
+                            val taskAdapter = TaskAdapter(this@InsideHomeActivity, taskList)
+                            taskListView = findViewById(R.id.listViewTasks)
+                            taskListView.adapter = taskAdapter
+                        }
+                    } else {
+                        Log.e("InsideHomeActivity", "Unsuccessful response: ${response.code()}")
+                        // Log error code or message if needed
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+                    Log.e("InsideHomeActivity", "Call failed: ${t.message}")
+                    // Log failure reason if needed
+                }
+            })
         }
+
+        recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = adapter
+
+        userId = intent.extras?.getInt("user_id")
     }
 
     fun openHome(v: View) {
@@ -75,7 +104,6 @@ class InsideHomeActivity : AppCompatActivity() {
                     residents?.let {
                         adapter.setResidents(it)
                     }
-                } else {
                 }
             }
 

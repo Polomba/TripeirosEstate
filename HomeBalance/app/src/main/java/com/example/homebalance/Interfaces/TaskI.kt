@@ -6,9 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface TaskI {
-    @GET("listTarefas")
+    @GET("Tarefa")
     fun getTarefas(): Call<List<Task>>
-    @GET("listTarefa/{homeid}")
+    @GET("Tarefa/{homeid}")
     fun listTarefaById(@Path("homeid") id: Int): Call<List<Task>>
 
 }

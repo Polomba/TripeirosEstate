@@ -12,7 +12,6 @@ router.get('/Residents/:UserId', getHouseByUserId);
 
 router.post('/Resident',addResident);
 
-//router.delete('/Resident/:ResidentId', deleteResident);
 
 module.exports = {
     routes: router

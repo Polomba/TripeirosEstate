@@ -1,6 +1,7 @@
 package com.example.homebalance.Adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,32 +21,37 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class TaskAdapter(private val context: Context, private val taskList: List<Task>) : BaseAdapter() {
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(GlobalVariables.HOMEBALANCE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
     override fun getCount(): Int {
+        Log.d("TaskAdapter", "getCount called")
         return taskList.size
     }
 
     override fun getItem(position: Int): Any {
+        Log.d("TaskAdapter", "getItem called at position $position")
         return taskList[position]
     }
 
     override fun getItemId(position: Int): Long {
+        Log.d("TaskAdapter", "getItemId called for position $position")
         return position.toLong()
     }
 
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(GlobalVariables.HOMEBALANCE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        Log.d("TaskAdapter", "getView called for position $position")
         var view = convertView
         val holder: ViewHolder
 
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.task_adapter, parent, false)
             holder = ViewHolder()
-            holder.taskImageView = view.findViewById(R.id.iv_taskpic)
-            holder.taskTextView = view.findViewById(R.id.textView)
-            holder.taskTextView2 = view.findViewById(R.id.tv_responsible)
+            holder.taskTextView = view.findViewById(R.id.TaskTitle)
+            holder.responsibleTextView = view.findViewById(R.id.tv_responsible)
+            holder.endDateTextView = view.findViewById(R.id.tv_endDate)
             view.tag = holder
         } else {
             holder = view.tag as ViewHolder
@@ -54,13 +60,11 @@ class TaskAdapter(private val context: Context, private val taskList: List<Task>
         val task = taskList[position]
 
         holder.taskTextView.text = task.title
-        holder.taskTextView2.text = "Loading..."
-        holder.taskImageView.setImageResource(R.drawable.icons8_home_96px_7)
+        holder.endDateTextView.text = task.date.toString()
 
-
-        task.userid?.let {
-            getUserById(it) { user ->
-                holder.taskTextView2.text = user?.name ?: "Unknown"
+        task.userid?.let { userId ->
+            getUserById(userId) { user ->
+                holder.responsibleTextView.text = ("Responsible:" + user?.name) ?: "Unknown"
             }
         }
 
@@ -68,12 +72,13 @@ class TaskAdapter(private val context: Context, private val taskList: List<Task>
     }
 
     private class ViewHolder {
-        lateinit var taskImageView: ImageView
         lateinit var taskTextView: TextView
-        lateinit var taskTextView2: TextView
+        lateinit var responsibleTextView: TextView
+        lateinit var endDateTextView: TextView
     }
 
     private fun getUserById(userId: Int, callback: (User?) -> Unit) {
+        Log.d("TaskAdapter", "getUserById called for userId $userId")
         val service = retrofit.create(UserI::class.java)
         val call = service.getUserById(userId)
 
@@ -96,6 +101,5 @@ class TaskAdapter(private val context: Context, private val taskList: List<Task>
             }
         })
     }
-
 }
 

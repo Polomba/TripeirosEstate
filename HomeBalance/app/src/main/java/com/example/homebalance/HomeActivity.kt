@@ -20,13 +20,11 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var listViewHouses: ListView
     private val ADD_HOME_REQUEST = 1
-    private var userId: Int? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        userId = intent.extras?.getInt("user_id")
+
 
         listViewHouses = findViewById(R.id.lst_houses)
         setupHouseList()
@@ -35,13 +33,14 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupHouseList() {
+        val userId = intent.extras?.getInt("user_id")
         val retrofit = Retrofit.Builder()
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val service = retrofit.create(ResidentI::class.java)
-        Log.d("UserId","$userId")
+
         val call = userId?.let { service.getHouseByUserId(it) }
 
         call?.enqueue(object : Callback<List<Home>> {
@@ -55,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
                         listViewHouses.setOnItemClickListener { _, _, position, _ ->
                             val selectedHome: Home = homes[position]
                             val intent = Intent(this@HomeActivity, InsideHomeActivity::class.java)
-                            val homeid = selectedHome.id.toString()
+                            val homeid = selectedHome.id
                             intent.putExtra("home_id", homeid)
                             intent.putExtra("user_id", userId)
                             startActivity(intent)
@@ -74,6 +73,7 @@ class HomeActivity : AppCompatActivity() {
 
     fun createHome(v: View) {
         val intent = Intent(this, AddHomeActivity::class.java)
+        val userId = intent.extras?.getInt("user_id")
         intent.putExtra("user_id", userId)
         startActivityForResult(intent, ADD_HOME_REQUEST)
     }

@@ -117,7 +117,7 @@ const deleteUtilizador = async (Id) => {
         let deletePaymentQuery = 'DELETE FROM [dbo].[Payment] WHERE [UserId] = @Id;';
         await pool.request().input('Id', sql.Int, Id).query(deletePaymentQuery);
 
-        let deleteTaskParticipant = 'DELETE FROM [dbo].[TaskPartipants] WHERE [UserId] = @Id';
+        let deleteTaskParticipant = 'DELETE FROM [dbo].[TaskParticipants] WHERE [UserId] = @Id';
         await pool.request().input('Id', sql.Int, Id).query(deleteTaskParticipant);
 
 

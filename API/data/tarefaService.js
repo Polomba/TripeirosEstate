@@ -7,7 +7,7 @@ const utils = require('../utils/utils');
 const listTarefas = async () => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'SELECT [Id],[Title],[Description],[Data],[State],[Photo]' +
+        let query = 'SELECT [Id],[Title],[Description],[Data],[State],[Photo], [homeid], [UserId]' +
             'FROM [dbo].[Task]';
         const list = await pool.request()
             .query(query);
@@ -21,7 +21,7 @@ const listTarefas = async () => {
 const listTarefaById = async (Id)=> {
     try {
         let pool = await  sql.connect(config.sql);
-        let query = 'SELECT [Id],[Title],[Description],[Data],[State],[Photo],[homeid]'+
+        let query = 'SELECT [Id],[Title],[Description],[Data],[State],[Photo], [homeid], [UserId]'+
             'FROM [dbo].[Task]' +
             'WHERE [homeid] = @Id';
 

@@ -22,6 +22,18 @@ const getTarefa = async (req, res)=> {
     }
 }
 
+const getTarefaTaskId = async (req, res)=> {
+    try {
+        const tarefaId = req.params.Id;
+        const oneTarefa = await tarefaData.listTarefaByTaskId(tarefaId);
+        res.send(oneTarefa);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+
 const addTarefa = async (req, res)=> {
     try {
         const data = req.body;
@@ -61,5 +73,6 @@ module.exports = {
     getTarefa,
     addTarefa,
     updateTarefa,
-    deleteTarefa
+    deleteTarefa,
+    getTarefaTaskId
 }

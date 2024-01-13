@@ -27,6 +27,7 @@ const addResident = async (req, res) => {
     try {
         const { houseId, userId } = req.body;
         const result = await residentsData.addResident(houseId, userId);
+
         res.send(result);
     } catch (error) {
         res.status(400).send(error.message);

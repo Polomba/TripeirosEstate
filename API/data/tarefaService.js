@@ -36,6 +36,24 @@ const listTarefaById = async (Id)=> {
     }
 }
 
+const listTarefaByTaskId = async (Id)=> {
+    try {
+        let pool = await  sql.connect(config.sql);
+        let query = 'SELECT [Id],[Title],[Description],[Data],[State],[Photo], [homeid], [UserId]'+
+            'FROM [dbo].[Task]' +
+            'WHERE [Id] = @Id';
+
+        const oneConteudo = await pool.request()
+            .query(query);
+
+        return oneConteudo.recordset;
+    }
+    catch (error) {
+        return  error.message;
+    }
+}
+
+
 const listTarefaByTitle = async (Title)=> {
     try {
         let pool = await  sql.connect(config.sql);
@@ -157,5 +175,6 @@ module.exports = {
     createTarefa,
     updateTarefa,
     deleteTarefa,
-    countTasksCreatedByUserInCurrentWeek
+    countTasksCreatedByUserInCurrentWeek,
+    listTarefaByTaskId
 }

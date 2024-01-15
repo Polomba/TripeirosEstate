@@ -11,4 +11,7 @@ interface TaskI {
     @GET("Tarefa/{homeid}")
     fun listTarefaById(@Path("homeid") id: Int): Call<List<Task>>
 
+    @GET("Tarefas/{taskid}")
+    fun listTarefaByTaskId(@Path("taskid") id: Int): Call<List<Task>>
+
 }

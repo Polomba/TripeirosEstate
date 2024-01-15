@@ -23,13 +23,8 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
-
-
         listViewHouses = findViewById(R.id.lst_houses)
         setupHouseList()
-
-
     }
 
     private fun setupHouseList() {

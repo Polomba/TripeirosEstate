@@ -7,5 +7,4 @@ data class Review (
     @SerializedName("Rating") val rating: Float?,
     @SerializedName("Comment") val comment: String?,
     @SerializedName("TaskId") val taskid: Int?,
-    @SerializedName("Task") val task: Task?,
 )

@@ -27,7 +27,7 @@ import retrofit2.create
 class InsideHomeActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HorizontalListViewAdapter
-    private lateinit var taskListView : ListView
+    private lateinit var taskListView : GridView
     private val ADD_RESIDENT_REQUEST = 2
     private var userId: Int? = null
     lateinit var taskList : List<Task>
@@ -49,6 +49,10 @@ class InsideHomeActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.horizontalscroll)
         adapter = HorizontalListViewAdapter()
 
+        // Inicializar taskListView com uma instância vazia
+        taskListView = findViewById(R.id.listViewTasks)
+        taskListView.adapter = TaskAdapter(this, emptyList())
+
         val houseId = intent.extras?.getInt("home_id")
         if (houseId != null) {
             getResidentsByHouseId(houseId)
@@ -61,20 +65,20 @@ class InsideHomeActivity : AppCompatActivity() {
                         tasks?.let {
                             taskList = it
                             val taskAdapter = TaskAdapter(this@InsideHomeActivity, taskList)
-                            taskListView = findViewById(R.id.listViewTasks)
                             taskListView.adapter = taskAdapter
                         }
                     } else {
-                        Log.e("InsideHomeActivity", "Unsuccessful response: ${response.code()}")
-                        // Log error code or message if needed
                     }
                 }
-
                 override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-                    Log.e("InsideHomeActivity", "Call failed: ${t.message}")
-                    // Log failure reason if needed
                 }
             })
+        }
+
+        taskListView.setOnItemClickListener { parent, view, position, id ->
+            val selectedTask = taskList[position]
+            val taskId = selectedTask.id
+            openTaskDetail(taskId)
         }
 
         recyclerView.layoutManager =
@@ -82,6 +86,13 @@ class InsideHomeActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         userId = intent.extras?.getInt("user_id")
+    }
+
+
+    private fun openTaskDetail(taskId: Int?) {
+        val intent = Intent(this@InsideHomeActivity, TaskDetailActivity::class.java)
+        intent.putExtra("task_id", taskId)
+        startActivity(intent)
     }
 
     fun openHome(v: View) {

@@ -6,8 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface CommentI {
-    @GET("listComments")
-    fun listComments(): Call<List<Comments>>
-    @GET("listPagamentos/{ID}")
-    fun listPagamentoById(@Path("ID") id: Int): Call<List<Comments>>
+    @GET("CommentTask/{taskId}")
+    fun listCommentsByTaskId(@Path("taskId") taskID: Int): Call<List<Comments>>
+
 }

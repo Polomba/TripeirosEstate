@@ -6,4 +6,6 @@ import com.example.homebalance.R
 
 class SpinnerAdapter {
 
+
+
 }

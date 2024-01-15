@@ -36,4 +36,8 @@
     <string name="nrResidences">Number of Homes:</string>
     <string name="nrConcludedTasks">Number of Concluded Tasks</string>
     <string name="availablehouses">Available Houses:</string>
+    <string name="taskimage">TaskImage</string>
+    <string name="comment">Comment:</string>
+    <string name="go_back">Go Back</string>
+    <string name="see_reviews">See Reviews</string>
 </resources>

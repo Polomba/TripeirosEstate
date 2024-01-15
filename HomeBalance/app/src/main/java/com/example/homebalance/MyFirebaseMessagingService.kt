@@ -10,7 +10,10 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -19,7 +22,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     val TAG = "MAIN"
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
-        //TODO: Add info to send to server
+
+
     }
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: ${remoteMessage.from}")
@@ -53,5 +57,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
         notificationManager.notify(0, notificationBuilder.build())
+    }
+
+    fun getPushToken() {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token = task.result
+                    val msg = "Firebase Cloud Messaging Token: $token"
+                    Log.d("Main", "$msg")
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.w("Main", "Fetching FCM registration token failed", task.exception)
+                }
+            }
     }
 }

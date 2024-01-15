@@ -28,9 +28,6 @@
             android:name=".AddTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".TaskActivity"
-            android:exported="false" />
-        <activity
             android:name=".InsideHomeActivity"
             android:exported="false" />
         <activity

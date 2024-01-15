@@ -1,8 +1,6 @@
 package com.example.homebalance
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,17 +13,17 @@ import com.example.homebalance.Classes.TokenResponse
 import com.example.homebalance.Classes.User
 import com.example.homebalance.Interfaces.AuthI
 import com.example.homebalance.Interfaces.UserI
-import com.google.gson.Gson
+import com.google.android.gms.tasks.OnCompleteListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity() : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
     }
 
     fun goBack(v: View) {
@@ -34,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun doLoginLP(v: View) {
+        MyFirebaseMessagingService()
         val emailEditText: EditText = findViewById(R.id.et_email)
         val passwordEditText: EditText = findViewById(R.id.et_password)
 
@@ -44,6 +43,8 @@ class LoginActivity : AppCompatActivity() {
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
+        //MyFirebaseMessagingService().getPushToken()
 
         val user = User(
             null,
@@ -105,6 +106,8 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+
+
 
 
 

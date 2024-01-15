@@ -2,6 +2,7 @@
 
 const reviewTaskData = require('../data/reviewTaskService');
 const utils = require('../utils/utils');
+const commentTaskData = require("../data/commentTaskService");
 
 const getReviewsTask = async (req, res) => {
     try {
@@ -33,14 +34,17 @@ const getReviewsByTaskId = async (taskId) => {
 
 const addReviewTask = async (req, res) => {
     try {
-        const reviewData = {
-            TaskId: req.params.taskId,
-            Rating: req.body.Rating,
-            Comment: req.body.Comment
-        };
+        const TaskId = req.params.taskId
+        const data = req.body
 
-        const created = await reviewTaskData.createReviewTask(reviewData);
-        res.send(created);
+        const taskExists = await commentTaskData.checkTaskExists(TaskId);
+
+        if (taskExists) {
+            const created = await reviewTaskData.createReviewTask(TaskId,data);
+            res.send(created);
+        } else {
+            res.status(404).send('Tarefa não encontrada. Não é possível adicionar uma review para uma tarefa inexistente.');
+        }
     } catch (error) {
         res.status(400).send(error.message);
     }

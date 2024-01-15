@@ -15,14 +15,17 @@ const listComments = async (req, res) => {
 
 const addCommentTask = async (req, res) => {
     try {
-        const { Comment } = req.body;
-        const { taskId } = req.params;
-        const userId = req.userId;
+        const TaskId = req.params.taskId;
+        const data = req.body
+        const taskExists = await commentTaskData.checkTaskExists(TaskId);
 
-        const created = await commentTaskData.createCommentTask(Comment, taskId, userId);
-        res.send(created);
-    }
-    catch (error) {
+        if (taskExists) {
+            const created = await commentTaskData.createCommentTask(TaskId, data);
+            res.send(created);
+        } else {
+            res.status(404).send('Tarefa não encontrada. Não é possível adicionar um comentário para uma tarefa inexistente.');
+        }
+    } catch (error) {
         res.status(400).send(error.message);
     }
 };

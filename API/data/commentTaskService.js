@@ -8,7 +8,7 @@ const listComments = async (req, res) => {
     try {
         let pool = await sql.connect(config.sql);
         let query = `
-            SELECT * FROM [dbo].[Coments];
+            SELECT * FROM [dbo].[ComMents];
         `;
 
         const result = await pool.request().query(query);
@@ -22,12 +22,10 @@ const listComments = async (req, res) => {
 const listCommentsByTaskId = async (taskId) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = `
-            SELECT * FROM [dbo].[Coments] WHERE [TaskId] = @taskId;
-        `;
+        let query = 'SELECT * FROM [dbo].[Comments] WHERE [TaskId] = @taskId';
 
         const result = await pool.request()
-            .input('taskId', sql.Int, taskId)
+            .input('TaskId', sql.Int, taskId)
             .query(query);
 
         return result.recordset;
@@ -37,24 +35,18 @@ const listCommentsByTaskId = async (taskId) => {
 };
 
 
-const createCommentTask = async (data) => {
+const createCommentTask = async (taskId, commentdata) => {
     try {
-        const { Comment, TaskId, UserId } = data;
-        const taskExists = await checkTaskExists(TaskId);
-
-        if (!taskExists) {
-            throw new Error('Tarefa não encontrada. Não é possível adicionar um comentário para uma tarefa inexistente.');
-        }
 
         let pool = await sql.connect(config.sql);
-        let query = 'INSERT INTO [dbo].[Coments] ' +
-            '([Comment],[TaskId],[UserId]) ' +
-            'VALUES (@Comment, @TaskId, @UserId) ';
+        let query = `INSERT INTO [dbo].[Comments] ([Comment], [TaskId], [UserId])
+                    VALUES (@Comment, @TaskId, @UserId);`;
+
 
         const insertConteudo = await pool.request()
-            .input('Comment', sql.VarChar(255), Comment)
-            .input('TaskId', sql.Int, TaskId)
-            .input('UserId', sql.Int, UserId)
+            .input('Comment', sql.VarChar(255), commentdata.Comment)
+            .input('TaskId', sql.Int, taskId)
+            .input('UserId', sql.Int, commentdata.UserId)
             .query(query);
 
         return insertConteudo.recordset;
@@ -68,17 +60,18 @@ const createCommentTask = async (data) => {
 const checkTaskExists = async (taskId) => {
     try {
         let pool = await sql.connect(config.sql);
-        let query = 'SELECT COUNT(*) AS Count FROM [dbo].[Task] WHERE [Id] = @taskId';
+        let query = 'SELECT * FROM [dbo].[Task] WHERE [Id] = @taskId';
 
         const result = await pool.request()
             .input('taskId', sql.Int, taskId)
             .query(query);
-
-        return result.recordset[0].Count > 0;
+        console.log("Count:" + result.recordset.length);
+        return result.recordset.length > 0;
     } catch (error) {
-        throw new Error('Erro ao verificar se a tarefa existe.');
+        throw new Error('Erro ao verificar se a tarefa existe: ' + error.message);
     }
-}
+};
+
 
 
 const updateCommentTask = async (commentId, data) => {
@@ -132,5 +125,6 @@ module.exports = {
     createCommentTask,
     updateCommentTask,
     deleteCommentTask,
-    listCommentsByTaskId
+    listCommentsByTaskId,
+    checkTaskExists
 }

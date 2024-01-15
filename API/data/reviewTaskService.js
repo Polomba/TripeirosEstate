@@ -21,7 +21,7 @@ const listReviewsTasks = async () => {
 }
 
 
-const createReviewTask = async (reviewData) => {
+const createReviewTask = async (taskId, data) => {
     try {
         let pool = await sql.connect(config.sql);
         let query = `
@@ -30,9 +30,9 @@ const createReviewTask = async (reviewData) => {
         `;
 
         const result = await pool.request()
-            .input('TaskId', sql.Int, reviewData.TaskId)
-            .input('Rating', sql.Float, reviewData.Rating)
-            .input('Comment', sql.VarChar(255), reviewData.Comment)
+            .input('TaskId', sql.Int, taskId)
+            .input('Rating', sql.Float, data.Rating)
+            .input('Comment', sql.VarChar(255), data.Comment)
             .query(query);
 
         return result.recordset;

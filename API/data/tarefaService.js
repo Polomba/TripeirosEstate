@@ -44,6 +44,7 @@ const listTarefaByTaskId = async (Id)=> {
             'WHERE [Id] = @Id';
 
         const oneConteudo = await pool.request()
+            .input('Id', sql.Int, Id)
             .query(query);
 
         return oneConteudo.recordset;

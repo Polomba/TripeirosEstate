@@ -32,7 +32,6 @@ class LoginActivity() : AppCompatActivity() {
     }
 
     fun doLoginLP(v: View) {
-        MyFirebaseMessagingService()
         val emailEditText: EditText = findViewById(R.id.et_email)
         val passwordEditText: EditText = findViewById(R.id.et_password)
 
@@ -44,7 +43,6 @@ class LoginActivity() : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        //MyFirebaseMessagingService().getPushToken()
 
         val user = User(
             null,

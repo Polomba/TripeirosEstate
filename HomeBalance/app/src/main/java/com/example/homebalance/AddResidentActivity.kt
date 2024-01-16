@@ -45,12 +45,11 @@ class AddResidentActivity : AppCompatActivity() {
 
         call.enqueue(object : Callback<HomeResponse> {
             override fun onResponse(call: Call<HomeResponse>, response: Response<HomeResponse>) {
-
+                setResult(RESULT_OK)
+                finish()
             }
 
             override fun onFailure(call: Call<HomeResponse>, t: Throwable) {
-                setResult(RESULT_OK)
-                finish()
             }
         })
     }

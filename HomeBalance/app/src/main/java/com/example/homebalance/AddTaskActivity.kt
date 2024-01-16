@@ -5,13 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
+import com.example.homebalance.Adapters.HorizontalListViewAdapter
+import com.example.homebalance.Adapters.SpinnerAdapter
 import com.example.homebalance.Classes.GlobalVariables
 import com.example.homebalance.Classes.HomeResponse
 import com.example.homebalance.Classes.Task
 import com.example.homebalance.Classes.TaskIdResponse
+import com.example.homebalance.Classes.User
+import com.example.homebalance.Interfaces.ResidentI
 import com.example.homebalance.Interfaces.TaskI
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -22,6 +28,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 class AddTaskActivity : AppCompatActivity() {
 
@@ -30,10 +37,30 @@ class AddTaskActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var et_ToDo: EditText
     private lateinit var et_addcomment: EditText
+    private lateinit var spinnerResponsible: Spinner
+    private lateinit var adapter: SpinnerAdapter
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(GlobalVariables.HOMEBALANCE_URL)
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+        .build()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_task)
+
+        // Inicialize o Spinner e o SpinnerAdapter
+        spinnerResponsible = findViewById(R.id.spinner_responsible)
+        adapter = SpinnerAdapter(this)
+        spinnerResponsible.adapter = adapter
+
+        // Restante do seu código
+        val homeId = intent.extras?.getInt("house_id")
+        if (homeId != null) {
+            getResidentsByHouseId(homeId)
+        }
     }
     fun openHome(v: View){
         val intent = Intent(this, HomeActivity::class.java)
@@ -53,19 +80,13 @@ class AddTaskActivity : AppCompatActivity() {
         //et_addcomment = findViewById(R.id.et_AddComment)
 
 
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl(GlobalVariables.HOMEBALANCE_URL)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-            .client(OkHttpClient.Builder().addInterceptor(loggingInterceptor).build())
-            .build()
-
 
         val homeId = intent.extras?.getInt("house_id")
         val userId = intent.extras?.getInt("user_id")
+        if (homeId != null) {
+            getResidentsByHouseId(homeId)
 
+        }
 
         val title = et_TaskName.text.toString()
         val ToDo = et_ToDo.text.toString()
@@ -97,7 +118,6 @@ class AddTaskActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<TaskIdResponse>>, response: Response<List<TaskIdResponse>>) {
                 if (response.isSuccessful) {
                     setResult(RESULT_OK)
-                    finish()
                 } else {
                     Log.d("YourTag", "Task creation failed with code: ${response.code()}")
                 }
@@ -111,6 +131,26 @@ class AddTaskActivity : AppCompatActivity() {
         })
 
 
+    }
+
+    private fun getResidentsByHouseId(houseId: Int) {
+        val residentService = retrofit.create(ResidentI :: class.java)
+        val call = residentService.getResidentsByHouseId(houseId)
+        call.enqueue(object : Callback<List<User>> {
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                if (response.isSuccessful) {
+                    val residents = response.body()
+                    residents?.let {
+
+                        adapter.setResidents(it)
+
+                    }
+                    Log.d("Residents", "$residents")
+                }
+            }
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+            }
+        })
     }
 
 

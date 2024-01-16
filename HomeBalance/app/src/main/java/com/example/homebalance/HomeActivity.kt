@@ -9,7 +9,10 @@ import android.widget.ListView
 import com.example.homebalance.Adapters.HouseDisplayAdapter
 import com.example.homebalance.Classes.GlobalVariables
 import com.example.homebalance.Classes.Home
+import com.example.homebalance.Classes.User
 import com.example.homebalance.Interfaces.ResidentI
+import com.example.homebalance.Interfaces.UserI
+import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +28,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         listViewHouses = findViewById(R.id.lst_houses)
         setupHouseList()
+        getPushToken()
     }
 
     private fun setupHouseList() {
@@ -80,6 +84,54 @@ class HomeActivity : AppCompatActivity() {
                 setupHouseList()
             }
         }
+    }
+
+    fun updateToken(token : String){
+        val userId = intent.extras?.getInt("user_id")
+        val retrofit = Retrofit.Builder()
+            .baseUrl(GlobalVariables.HOMEBALANCE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(UserI :: class.java)
+        Log.d("Token","$token")
+
+        val userData = User(
+            null,
+            null,
+            null,
+            null,
+            null,
+            token,
+            null
+        )
+
+        val call = service.updateUser(userId!!, userData)
+
+        call?.enqueue(object : Callback<List<User>>{
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                Log.d("Ola1", "ola1")
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                Log.d("Ola1", "ola1")
+            }
+
+        })
+    }
+
+    fun getPushToken() {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token = task.result
+                    updateToken(token)
+                    val msg = "Firebase Cloud Messaging Token: $token"
+                    Log.d("Main", "$msg")
+                } else {
+                    Log.w("Main", "Fetching FCM registration token failed", task.exception)
+                }
+            }
     }
 
 

@@ -6,8 +6,8 @@ const router = express.Router();
 
 const {getReviewsTask, addReviewTask, updateReviewTask, deleteReviewTask} = reviewTaskController;
 
-router.get('/ReviewsTask', checkRoles.checkRoleTarefa,  getReviewsTask);
-router.get('/ReviewsTask',checkRoles.checkRoleTarefa,  getReviewsTask);
+
+router.get('/ReviewsTask', getReviewsTask);
 
 router.post('/ReviewTask/:taskId', addReviewTask);
 

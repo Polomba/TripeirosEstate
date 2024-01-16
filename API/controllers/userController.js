@@ -66,11 +66,26 @@ const deleteUtilizador = async (req, res)=> {
     }
 }
 
+const updateUtilizador = async (req, res)=> {
+    try {
+        const utilizadorId = req.params.Id;
+        const user = req.body;
+        const updated = await utilizadorData.updateUserToken(utilizadorId, user.Token);
+        res.send(updated);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+
+
 module.exports = {
     getUtilizadores,
     getUtilizador,
     addUtlizador,
     updateRolesUtilizador,
     deleteUtilizador,
-    getUtilizadorByEmail
+    getUtilizadorByEmail,
+    updateUtilizador
 }

@@ -91,7 +91,7 @@ const createUtilizador = async (userData) => {
             .input('Email', sql.VarChar(255), userData.Email)
             .input('Password', sql.VarChar(255), userData.Password)
             .input('Roles', sql.VarChar(255), utils.user_roles.UR_Normal)
-            .input('Token', sql.VarChar(512), userData.Token)
+            .input('Token', sql.VarChar(255), userData.Token)
             .input('ProfilePicture', sql.VarChar(255), userData.ProfilePicture)
             .query(query);
         return result.recordset;
@@ -139,7 +139,7 @@ async function updateUserToken(userId, newToken) {
         let pool = await sql.connect(config);
         let result = await pool
             .request()
-            .input('Token', sql.VarChar(512), newToken)
+            .input('Token', sql.VarChar(255), newToken)
             .input('UserId', sql.Int, userId)
             .query('UPDATE [User] SET Token = @Token WHERE Id = @UserId');
 
@@ -156,4 +156,5 @@ module.exports={
     updateRolesUtilizador,
     createUtilizador,
     deleteUtilizador,
+    updateUserToken
 }

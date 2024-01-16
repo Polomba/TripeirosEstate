@@ -77,9 +77,9 @@ const createTarefa = async (tarefaData) => {
     try {
         let pool = await sql.connect(config.sql);
         let query = `INSERT INTO [dbo].[Task] 
-            ([Title], [Description], [Data], [State], [Photo], [Homeid], [UserId]) 
+            ([Title], [Description], [Data], [State], [Photo], [Homeid], [UserId])
+            OUTPUT INSERTED.id
             VALUES (@Title, @Description, @Data, @State, @Photo, @Homeid, @UserId);
-            SELECT SCOPE_IDENTITY() AS Id;
         `;
 
         const insertConteudo = await pool.request()
@@ -94,7 +94,7 @@ const createTarefa = async (tarefaData) => {
 
         return insertConteudo.recordset;
     } catch (error) {
-        return error.message;
+        return { success: false, error: error.message };
     }
 };
 

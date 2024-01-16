@@ -1,6 +1,7 @@
 'use strict'
 
 const tarefaData = require('../data/tarefaService');
+const {getAccessToken} = require("../utils/getApi");
 
 const getTarefas = async (req, res) => {
     try {
@@ -38,6 +39,7 @@ const addTarefa = async (req, res)=> {
     try {
         const data = req.body;
         const created = await tarefaData.createTarefa(data);
+        const googleAuthToken = getAccessToken()
         res.send(created);
     }
     catch (error) {

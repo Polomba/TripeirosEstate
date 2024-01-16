@@ -25,8 +25,8 @@ const getHouseByUserId = async (req, res) => {
 
 const addResident = async (req, res) => {
     try {
-        const { houseId, userId } = req.body;
-        const result = await residentsData.addResident(houseId, userId);
+        const { HouseId, UserId } = req.body;
+        const result = await residentsData.addResident(HouseId, UserId);
 
         res.send(result);
     } catch (error) {

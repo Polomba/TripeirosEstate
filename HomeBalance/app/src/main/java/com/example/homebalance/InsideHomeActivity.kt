@@ -29,7 +29,9 @@ class InsideHomeActivity : AppCompatActivity() {
     private lateinit var adapter: HorizontalListViewAdapter
     private lateinit var taskListView : GridView
     private val ADD_RESIDENT_REQUEST = 2
+    private val CREATE_TASK_REQUEST = 1
     private var userId: Int? = null
+    private var houseId: Int? = null
     lateinit var taskList : List<Task>
 
     private val retrofit = Retrofit.Builder()
@@ -39,7 +41,6 @@ class InsideHomeActivity : AppCompatActivity() {
 
     private val residentService = retrofit.create(ResidentI::class.java)
     private val tarefaService = retrofit.create(TaskI::class.java)
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +55,7 @@ class InsideHomeActivity : AppCompatActivity() {
         taskListView.adapter = TaskAdapter(this, emptyList())
 
         val houseId = intent.extras?.getInt("home_id")
+
         if (houseId != null) {
             getResidentsByHouseId(houseId)
             val call = houseId.let { tarefaService.listTarefaById(it) }
@@ -86,6 +88,7 @@ class InsideHomeActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         userId = intent.extras?.getInt("user_id")
+        this.houseId = intent.extras?.getInt("home_id")
     }
 
 
@@ -127,7 +130,9 @@ class InsideHomeActivity : AppCompatActivity() {
 
     fun CreateTask(v: View) {
         val intent = Intent(this@InsideHomeActivity, AddTaskActivity::class.java)
-        startActivity(intent)
+        intent.putExtra("house_id", houseId)
+        intent.putExtra("user_id", userId)
+        startActivityForResult(intent, CREATE_TASK_REQUEST)
     }
 
     fun goInviteResident(v: View) {
@@ -145,7 +150,29 @@ class InsideHomeActivity : AppCompatActivity() {
                 val houseId = intent.extras?.getInt("home_id")
                 houseId?.let { getResidentsByHouseId(it) }
             }
+        } else if (requestCode == CREATE_TASK_REQUEST ) {
+            val houseId = intent.extras?.getInt("home_id")
+            houseId?.let {
+                val call = tarefaService.listTarefaById(it)
+                call?.enqueue(object : Callback<List<Task>> {
+                    override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                        if (response.isSuccessful) {
+                            val tasks = response.body()
+                            tasks?.let {
+                                taskList = it
+                                val taskAdapter = TaskAdapter(this@InsideHomeActivity, taskList)
+                                taskListView.adapter = taskAdapter
+                            }
+                        } else {
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+                    }
+                })
+            }
         }
     }
+
 
 }

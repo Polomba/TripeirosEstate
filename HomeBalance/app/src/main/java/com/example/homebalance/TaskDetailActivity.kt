@@ -111,6 +111,11 @@ class TaskDetailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun goBack(v: View){
+        finish()
+    }
+
+
     fun getComments(taskId : Int){
         val retrofit = Retrofit.Builder()
             .baseUrl(GlobalVariables.HOMEBALANCE_URL)

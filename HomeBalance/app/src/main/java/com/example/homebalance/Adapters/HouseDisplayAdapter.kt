@@ -24,6 +24,7 @@ class HouseDisplayAdapter(context: Context, homes: List<Home>) :
 
         val currentHome = getItem(position)
 
+
         val houseNameTextView = listItemView!!.findViewById<TextView>(R.id.tv_housename)
         val addressTextView = listItemView.findViewById<TextView>(R.id.address)
 

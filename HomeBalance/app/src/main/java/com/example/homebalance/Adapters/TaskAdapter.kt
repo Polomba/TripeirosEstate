@@ -60,11 +60,9 @@ class TaskAdapter(private val context: Context, private val taskList: List<Task>
         Log.d("Photo", "File exists: ${file.exists()}")
 
         if (file.exists()) {
-            // File exists, proceed with loading
             Glide.with(context).load(file).into(taskImage)
         } else {
-            // File does not exist, handle accordingly
-            taskImage.setImageResource(R.drawable.icons8_home_96px_7)
+            taskImage.setImageResource(R.drawable.janitor_60px)
         }
 
 

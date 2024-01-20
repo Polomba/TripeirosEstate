@@ -35,4 +35,8 @@ class HorizontalListViewAdapter : RecyclerView.Adapter<HorizontalListViewAdapter
             itemView.findViewById<TextView>(R.id.tv_adapter).text = resident.name
         }
     }
+
+    object AdapterManager {
+        var horizontalAdapter: HorizontalListViewAdapter? = null
+    }
 }

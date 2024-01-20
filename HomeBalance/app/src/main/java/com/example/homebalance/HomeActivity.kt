@@ -71,8 +71,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun createHome(v: View) {
-        val intent = Intent(this, AddHomeActivity::class.java)
         val userId = intent.extras?.getInt("user_id")
+        val intent = Intent(this, AddHomeActivity::class.java)
         intent.putExtra("user_id", userId)
         startActivityForResult(intent, ADD_HOME_REQUEST)
     }

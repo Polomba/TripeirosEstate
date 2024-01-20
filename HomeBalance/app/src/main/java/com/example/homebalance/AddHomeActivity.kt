@@ -54,7 +54,7 @@ class AddHomeActivity : AppCompatActivity() {
         val sp = GlobalVariables.getSharedPreferencesContext(this@AddHomeActivity)
         val token = sp.getString("authToken", null)
         val service = retrofit.create(HomeI::class.java)
-        val call = service.createHouse(token ,home)
+        val call = service.createHouse(token, home)
 
         call.enqueue(object : Callback<List<HomeResponse>> {
             override fun onResponse(call: Call<List<HomeResponse>>, response: Response<List<HomeResponse>>) {
@@ -91,7 +91,8 @@ class AddHomeActivity : AppCompatActivity() {
 
         call.enqueue(object : Callback<HomeResponse> {
             override fun onResponse(call: Call<HomeResponse>, response: Response<HomeResponse>) {
-
+                setResult(RESULT_OK)
+                finish()
             }
 
             override fun onFailure(call: Call<HomeResponse>, t: Throwable) {

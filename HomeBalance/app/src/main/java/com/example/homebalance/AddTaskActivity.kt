@@ -141,11 +141,8 @@ class AddTaskActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val residents = response.body()
                     residents?.let {
-
                         adapter.setResidents(it)
-
                     }
-                    Log.d("Residents", "$residents")
                 }
             }
             override fun onFailure(call: Call<List<User>>, t: Throwable) {

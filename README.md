@@ -1,4 +1,4 @@
-# AM2R-Safoos-sw_app_staging
+# AM2R
 
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. 

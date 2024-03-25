@@ -9,7 +9,7 @@ The Complete Guide to test a Flutter App:
   - A widget test (in other UI frameworks referred to as component 
   - An integration test tests a complete app or a large part of an app.
 
-## Instalation
+## Installation
 
 After have [Flutter](https://flutter-ko.dev/get-started/install) installed on your computer. From your command line:
 
@@ -29,7 +29,7 @@ $ import 'package:test/test.dart';
 ```
 
 > **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+> For more information [see this guide](https://docs.flutter.dev/testing/overview).
 
 ## Create a folder to create files for testing
 

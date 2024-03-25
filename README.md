@@ -1,6 +1,8 @@
 
 # Flutter Tests
-The Complete Guide to test a Flutter App:
+### The Complete Guide to test a Flutter App:
+![Flutter Image](https://github.com/Polomba/TripeirosEstate/assets/73592308/0dc4fd13-b41a-4f95-b6e3-7c2b8b119b05)
+
 
 ## Key Features
 
@@ -399,9 +401,15 @@ void main() {
 ```
 
 # Unit and Widgets Results
+## What expect from terminal while executing Unit and Widgets tests:
+### Unit Testing:
+![UnitTestResults](https://github.com/Polomba/TripeirosEstate/assets/73592308/4d4d2b34-c6b4-4213-8e30-448e13b26314)
+
+### Widget Testing:
+![WidgetTestResult](https://github.com/Polomba/TripeirosEstate/assets/73592308/dfc427c5-a211-4831-97ce-1a8bba1c8f5b)
+
 
 # Run tests using IntelliJ or VSCode
-
 The Flutter plugins for IntelliJ and VSCode support running tests. This is often the best option while writing tests because it provides the fastest feedback and the ability to set breakpoints.
 
 #### IntelliJ

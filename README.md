@@ -121,8 +121,9 @@ child: CustomScaffold(
   }
 }
 ```
-## Write a widget test for our class
-This test add and remove a route to a list of favourite routes
+
+## Write a unit test for our class
+This test add and remove a route from a list of favourite routes
 
 ```ruby
 import 'package:flutter_test/flutter_test.dart';
@@ -168,6 +169,7 @@ void main() {
 
 # Examples - WidgetTesting
 ## Create a class to test
+This class create a splashScreen with a text in the middle and a gradient container
 ```ruby
 class SplashScreen extends StatefulWidget {}
 class _SplashScreenState extends State<SplashScreen>
@@ -201,7 +203,7 @@ class _SplashScreenState extends State<SplashScreen>
 ```
 
 ## Write a widget test for our class
-
+This test verify if the Scaffold, Column and Container are loaded, and also tests whether the gradient was executed correctly.
 ```ruby
 import 'package:flutter_test/flutter_test.dart';
 
@@ -234,6 +236,169 @@ void main() {
     });
 }
 ```
+
+# Examples - IntegrationTesting
+## Add integration dependencies to pubspec.yml 
+
+```bash
+integration_test:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+```
+## Create a class to test
+Same example Unit Testing
+This class create a widget with a list of possible favorite routes.
+```ruby
+class FavoriteRoutesUI extends StatefulWidget {
+  final List<RouteModel> favRoutes;
+  FavoriteRoutesUI({super.key, required this.favRoutes});
+
+  @override
+  State<FavoriteRoutesUI> createState() => _FavoriteRoutesUIState();
+}
+
+class _FavoriteRoutesUIState extends State<FavoriteRoutesUI> {
+  final _favoriteRoutesCubit = CubitFactory.favoriteRoutesCubit;
+  List<RouteModel> favRoutes = [];
+  bool _didChanges = false;
+
+@override
+Widget build(BuildContext context) {
+  return WillPopScope(
+    onWillPop: () async {
+      Navigator.of(context).pop(_didChanges);
+      return true;
+    },
+child: CustomScaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 32,
+            ),
+            const Text(
+              'Caminhos Favoritos',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            BlocConsumer<FavoriteRoutesCubit, ApplicationState>(
+              bloc: _favoriteRoutesCubit,
+              builder: (context, state) {
+                return Expanded(
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        final route = widget.favRoutes[index];
+                        return ListTile(
+                          leading: Image.asset(ApplicationAssets.routeIcon),
+                          title: Text(route.name),
+                          subtitle: Text(
+                              'Distância - ${route.distance.toStringAsFixed(0)}km'),
+                          trailing: IconButton(
+                            onPressed: () {
+                              _favoriteRoutesCubit
+                                  .removeFromFavorites(route.id);
+                            },
+                            icon: const Icon(Icons.favorite),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => const Divider(
+                            thickness: 1,
+                          ),
+                      itemCount: widget.favRoutes.length),
+                );
+              },
+              listener: (context, state) {
+                switch (state.runtimeType) {
+                  case FavoriteRoutesRemoveSuccessState:
+                    favRoutes.removeWhere((element) =>
+                        element.id ==
+                        (state as FavoriteRoutesRemoveSuccessState).routeId);
+                    _didChanges = true;
+                    break;
+                  default:
+                }
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+## Write a integration test for our class
+This test check if Text "Caminhos Favoritos" and Button are loaded, and add and remove a route from a list of favourite routes
+```ruby
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  group('FavoriteRoutesUI Widget Tests', () {
+    testWidgets('Widget renders correctly', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: FavoriteRoutesUI(
+          favRoutes: [],
+        ),
+      ));
+
+      expect(find.text('Caminhos Favoritos'), findsOneWidget);
+
+      expect(find.byType(BackButton), findsOneWidget);
+
+      await tester.pumpAndSettle(Duration(seconds: 1)); // Wait for
+    });
+
+    testWidgets('Removing from favorites triggers UI update',
+        (WidgetTester tester) async {
+      final List<RouteModel> favoriteRoutes = [
+        RouteModel(
+            id: '1',
+            name: 'Route 1',
+            distance: 10,
+            idStatus: '1',
+            description: 'Teste1'),
+        RouteModel(
+            id: '2',
+            name: 'Route 2',
+            distance: 20,
+            idStatus: '2',
+            description: 'Teste2'),
+      ];
+
+      await tester.pumpWidget(MaterialApp(
+        home: FavoriteRoutesUI(
+          favRoutes: favoriteRoutes,
+        ),
+      ));
+
+      expect(find.text('Route 1'), findsOneWidget);
+      expect(find.text('Route 2'), findsOneWidget);
+
+      await tester.pumpAndSettle(Duration(seconds: 2));
+
+      await tester.tap(find.byIcon(Icons.favorite).first);
+      await tester.pump();
+
+      await tester.pumpAndSettle(Duration(seconds: 2));
+
+      expect(find.text('Route 1'), findsNothing);
+      expect(find.text('Route 2'), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.favorite).first);
+      await tester.pump();
+    });
+  });
+}
+
+```
+
+# Unit and Widgets Results
 
 # Run tests using IntelliJ or VSCode
 

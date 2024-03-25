@@ -400,21 +400,6 @@ void main() {
 
 ```
 
-# Unit and Widgets tests Results
-## What expect from terminal while executing Unit and Widgets tests:
-### Unit Testing:
-![UnitTestResults](https://github.com/Polomba/TripeirosEstate/assets/73592308/4d4d2b34-c6b4-4213-8e30-448e13b26314)
-
-### Widget Testing:
-![WidgetTestResult](https://github.com/Polomba/TripeirosEstate/assets/73592308/dfc427c5-a211-4831-97ce-1a8bba1c8f5b)
-
-#### If the tests after execution have no errors, this means that everything expected is loaded, it will be marked with a certain.
-
-# Integration tests Results
-#### Unlike unit and widgets tests, integrations tests test a large part of the application at once, but to do this it is necessary to have an emulator or a device ready to run the app in test mode as you can see in the following video:
-
-https://github.com/Polomba/TripeirosEstate/assets/73592308/411ebe21-c4db-456f-9bf7-e74841863d6c
-
 # Run tests using IntelliJ or VSCode
 The Flutter plugins for IntelliJ and VSCode support running tests. This is often the best option while writing tests because it provides the fastest feedback and the ability to set breakpoints.
 
@@ -431,3 +416,19 @@ Go to Run > Start Debugging. You can also press the appropriate keyboard shortcu
 ```
 
 
+
+# Unit and Widgets tests Results
+## What expect from terminal while executing Unit and Widgets tests:
+### Unit Testing:
+![UnitTestResults](https://github.com/Polomba/TripeirosEstate/assets/73592308/4d4d2b34-c6b4-4213-8e30-448e13b26314)
+
+### Widget Testing:
+![WidgetTestResult](https://github.com/Polomba/TripeirosEstate/assets/73592308/dfc427c5-a211-4831-97ce-1a8bba1c8f5b)
+
+#### If the tests after execution have no errors, this means that everything expected is loaded, it will be marked with a certain.
+
+
+# Integration tests Results
+#### Unlike unit and widgets tests, integrations tests test a large part of the application at once, but to do this it is necessary to have an emulator or a device ready to run the app in test mode as you can see in the following video:
+
+![IntegrationTestResult-ezgif com-video-to-gif-converter](https://github.com/Polomba/TripeirosEstate/assets/73592308/116e92fb-27d5-4097-852d-4f25eb57e873)

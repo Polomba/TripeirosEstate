@@ -241,13 +241,13 @@ The Flutter plugins for IntelliJ and VSCode support running tests. This is often
 
 #### IntelliJ
 ```bash
-Open the counter_test.dart file
-Go to Run > Run ‘tests in counter_test.dart’. You can also press the appropriate keyboard shortcut for your platform.
+Open the "name"_test.dart file
+Go to Run > Run ‘tests in "name"_test.dart’. You can also press the appropriate keyboard shortcut for your platform.
 ```
 
 #### VSCode
 ```bash
-Open the counter_test.dart file
+Open the "name"_test.dart file
 Go to Run > Start Debugging. You can also press the appropriate keyboard shortcut for your platform.
 ```
 

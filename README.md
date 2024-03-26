@@ -38,11 +38,20 @@ $ import 'package:test/test.dart';
 If you dont have the file created, you can creat in the directory folder with the name "test" 
 ![TestFolder](https://github.com/Polomba/TripeirosEstate/assets/73592308/ebd0fc26-8ea2-474a-9b63-3116aeeb698b)
 
-# Examples - UnitTesting
+# Examples - UnitTesting (AM2R)
 ## Create a class to test
 This class create a widget with a list of possible favorite routes.
 
 ```ruby
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:generic_project/core/components/custom_scaffold.dart';
+import 'package:generic_project/core/constants/application_assets.dart';
+import 'package:generic_project/core/cubits/application_state.dart';
+import 'package:generic_project/core/cubits/cubit_factory.dart';
+import 'package:generic_project/core/data/models/route/route_model.dart';
+import 'package:generic_project/features/favorite_routes/presentation/business_components/cubit/favorite_routes_cubit.dart';
+
 class FavoriteRoutesUI extends StatefulWidget {
   final List<RouteModel> favRoutes;
   FavoriteRoutesUI({super.key, required this.favRoutes});
@@ -56,14 +65,20 @@ class _FavoriteRoutesUIState extends State<FavoriteRoutesUI> {
   List<RouteModel> favRoutes = [];
   bool _didChanges = false;
 
-@override
-Widget build(BuildContext context) {
-  return WillPopScope(
-    onWillPop: () async {
-      Navigator.of(context).pop(_didChanges);
-      return true;
-    },
-child: CustomScaffold(
+  @override
+  void initState() {
+    favRoutes = widget.favRoutes;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(_didChanges);
+        return true;
+      },
+      child: CustomScaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -118,16 +133,24 @@ child: CustomScaffold(
             )
           ],
         ),
+        showLeading: BackButton(
+          onPressed: () => Navigator.of(context).pop(_didChanges),
+          color: Colors.black,
+        ),
       ),
     );
   }
 }
+
 ```
 
 ## Write a unit test for our class
 This test add and remove a route from a list of favourite routes
 
 ```ruby
+import 'package:generic_project/core/data/models/route/route_model.dart';
+import 'package:generic_project/features/favorite_routes/presentation/user_interfaces/favorite_routes_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -169,14 +192,89 @@ void main() {
 
 ```
 
-# Examples - WidgetTesting
+# Examples - WidgetTesting - (SmartBlanket)
 ## Create a class to test
 This class create a splashScreen with a text in the middle and a gradient container
 ```ruby
-class SplashScreen extends StatefulWidget {}
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:smart_blanket/utils/widgets/notification_count.dart';
+import 'package:smart_blanket/views/connection_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../controllers/bluetooth_scan_controller.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key, required this.notificationCountProvider});
+
+  final NotificationCountProvider notificationCountProvider;
+
+  @override
+  State<SplashScreen> createState() {
+    return _SplashScreenState();
+  }
+}
+
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  late Timer _timer;
 
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    WidgetsBinding.instance.addObserver(this);
+    getPermissions();
+    _timer = Timer(const Duration(seconds: 2), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => ConnectionScreen(
+            notificationCountProvider: widget.notificationCountProvider,
+            blankets: const [],
+          ),
+        ),
+      );
+    });
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+
+      print("didChangeAppLifecycleState");
+      print(state);
+      switch (state) {
+        case AppLifecycleState.resumed:
+          print("app in resumed");
+          FlutterBackgroundService().invoke("setAsBackground");
+          break;
+        case AppLifecycleState.inactive:
+          print("app in inactive");
+          FlutterBackgroundService().invoke("setAsForeground");
+          break;
+        case AppLifecycleState.paused:
+          print("app in paused");
+          FlutterBackgroundService().invoke("setAsForeground");
+          break;
+        case AppLifecycleState.detached:
+          print("app in detached");
+          FlutterBackgroundService().invoke("stopService");
+          break;
+      }
+
+  }
+ void getPermissions() async {
+   BluetoothScanController().start();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -202,11 +300,15 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 }
+
 ```
 
 ## Write a widget test for our class
 This test verify if the Scaffold, Column and Container are loaded, and also tests whether the gradient was executed correctly.
 ```ruby
+import 'package:flutter/material.dart';
+import 'package:smart_blanket/utils/widgets/notification_count.dart';
+import 'package:smart_blanket/views/splash_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -237,9 +339,10 @@ void main() {
       expect(text.style?.color, equals(Colors.white));
     });
 }
+
 ```
 
-# Examples - IntegrationTesting
+# Examples - IntegrationTesting - (AM2R)
 ## Add integration dependencies to pubspec.yml 
 
 ```bash
@@ -252,6 +355,15 @@ integration_test:
 Same example Unit Testing
 This class create a widget with a list of possible favorite routes.
 ```ruby
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:generic_project/core/components/custom_scaffold.dart';
+import 'package:generic_project/core/constants/application_assets.dart';
+import 'package:generic_project/core/cubits/application_state.dart';
+import 'package:generic_project/core/cubits/cubit_factory.dart';
+import 'package:generic_project/core/data/models/route/route_model.dart';
+import 'package:generic_project/features/favorite_routes/presentation/business_components/cubit/favorite_routes_cubit.dart';
+
 class FavoriteRoutesUI extends StatefulWidget {
   final List<RouteModel> favRoutes;
   FavoriteRoutesUI({super.key, required this.favRoutes});
@@ -265,14 +377,20 @@ class _FavoriteRoutesUIState extends State<FavoriteRoutesUI> {
   List<RouteModel> favRoutes = [];
   bool _didChanges = false;
 
-@override
-Widget build(BuildContext context) {
-  return WillPopScope(
-    onWillPop: () async {
-      Navigator.of(context).pop(_didChanges);
-      return true;
-    },
-child: CustomScaffold(
+  @override
+  void initState() {
+    favRoutes = widget.favRoutes;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(_didChanges);
+        return true;
+      },
+      child: CustomScaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -327,15 +445,23 @@ child: CustomScaffold(
             )
           ],
         ),
+        showLeading: BackButton(
+          onPressed: () => Navigator.of(context).pop(_didChanges),
+          color: Colors.black,
+        ),
       ),
     );
   }
 }
+
 ```
 
 ## Write a integration test for our class
 This test check if Text "Caminhos Favoritos" and Button are loaded, and add and remove a route from a list of favourite routes
 ```ruby
+import 'package:generic_project/core/data/models/route/route_model.dart';
+import 'package:generic_project/features/favorite_routes/presentation/user_interfaces/favorite_routes_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -397,7 +523,6 @@ void main() {
     });
   });
 }
-
 ```
 
 # Run tests using IntelliJ or VSCode
